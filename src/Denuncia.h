@@ -4,9 +4,7 @@
 #include <string>
 
 class Preambulo;
-
 class Delito;
-
 class Fecha;
 
 using namespace std;
