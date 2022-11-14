@@ -17,6 +17,7 @@ public:
 	int GetHora();
 	string GetLugar();
 	virtual ~Preambulo();
+	void MostrarInfo();
 };
 
 #endif /* PREAMBULO_H_ */

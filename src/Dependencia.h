@@ -22,6 +22,8 @@ public:
 	virtual ~Dependencia();
 	int GetCodigo();
 	string GetNombre();
+	Oficial GetOficial();
+	void MostrarInfo();
 };
 
 #endif /* DEPENDENCIA_H_ */

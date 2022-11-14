@@ -15,3 +15,8 @@ Fecha Preambulo::GetFecha(){
 string Preambulo::GetLugar(){
 	return this->Lugar;
 }
+
+void Preambulo::MostrarInfo(){
+	cout << "Fecha: " << FechaP << endl;
+	cout << "Lugar: " << Lugar << endl;
+}
