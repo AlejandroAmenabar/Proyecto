@@ -9,11 +9,10 @@ using namespace std;
 class Preambulo {
 private:
 	Fecha FechaP;
-	int Hora;
 	string Lugar;
 
 public:
-	Preambulo(Fecha fecha, int hora, string lugar);
+	Preambulo(Fecha fecha, string lugar);
 	Fecha GetFecha();
 	int GetHora();
 	string GetLugar();
