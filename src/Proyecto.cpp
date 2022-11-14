@@ -7,9 +7,14 @@
 //============================================================================
 
 #include <iostream>
+#include "Persona.h"
 using namespace std;
 
 int main() {
-	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
+	Fecha F;
+	Persona P(43321142,"ale",F,"españa 4455",'M');
+	P.MostrarInfo();
+
+
 	return 0;
 }
