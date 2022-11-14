@@ -1,9 +1,8 @@
 #include "DenunciaEscrita.h"
+#include "Fecha.h"
 
-virtual DenunciaEscrita::~DenunciaEscrita(){
-
-}
-
-virtual void DenunciaEscrita::Derivar(Fecha fecha, const string &investigacion) const {
+void DenunciaEscrita::Derivar(Fecha fecha, const string &investigacion) const {
 
 }
+
+

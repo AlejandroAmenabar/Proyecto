@@ -12,9 +12,12 @@ class DenunciaOral : public Denuncia {
 
 public:
 
-    DenunciaOral(int codigo, const string &descripcion, Imagen *firmaDemandante, Imagen *firmaOficial,
-                 string descripcion1) : Denuncia(codigo, descripcion, firmaDemandante, firmaOficial),
-                                               Descripcion(std::move(descripcion1)) {}
+    DenunciaOral(int codigo, const string &descripcion, const string &firmaDemandante,
+                 const string &firmaOficial, class Delito *delito, const string &descripcion1) : Denuncia(codigo, descripcion,
+                                                                                                    firmaDemandante,
+                                                                                                    firmaOficial,
+                                                                                                    delito),
+                                                                                           Descripcion(descripcion1) {}
 
     ~DenunciaOral() override = 0;
 

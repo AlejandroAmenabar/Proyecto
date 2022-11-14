@@ -1,7 +1,3 @@
-/*
- * Fecha.cpp
- */
-
 #include "Fecha.h"
 #include <iostream>
 #include <iomanip>
@@ -15,6 +11,10 @@ Fecha::Fecha() {
 Fecha::Fecha(short int d, short int m, short int a) {
 	setFecha(d, m, a);
 }
+Fecha::Fecha(const short d, const short m, const short a, const short hora, const short minuto, const short segundo) {
+
+}
+
 Fecha::Fecha(const Fecha &f) :
 	dia(f.dia), mes(f.mes), anio(f.anio) {
 }
@@ -38,16 +38,17 @@ void Fecha::setFecha(const short d, const short m, const short a) {
 		setFechaActual();
 	}
 }
-
 bool Fecha::esAnioValido() const {
 	return (anio > 0);
 }
 bool Fecha::esMesValido() const {
 	return (mes >= 1 && mes <= 12);
 }
+
 bool Fecha::esDiaValido() const {
 	return (dia >= 1 && dia <= diasEnMes(mes));
 }
+
 
 short Fecha::diasEnMes(const short m) const{
 	short cantidadDias = 0;
@@ -78,19 +79,8 @@ short Fecha::diasEnMes(const short m) const{
 	return cantidadDias;
 }
 
-
 bool Fecha::esAnioBisiesto() const {
 	return ((anio % 4 == 0 && anio % 100 != 0) || anio % 400 == 0);
-}
-
-short Fecha::getDia() const {
-	return dia;
-}
-short Fecha::getMes() const {
-	return mes;
-}
-short Fecha::getAnio() const {
-	return anio;
 }
 
 long int Fecha::cantidadDiasDelAnio(){
@@ -112,10 +102,10 @@ long int Fecha::cantidadDiasDelAnio(){
 		}
 		return cantidadDias;
 }
-
 bool esAnioBisiesto(int anio){
 	return ((anio % 4 == 0 && anio % 100 != 0) || anio % 400 == 0);
 }
+
 long int cantidadDiasAniosCompletos(int anioBase, int anio){
 
 	long int dias=0;

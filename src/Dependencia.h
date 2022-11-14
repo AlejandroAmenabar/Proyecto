@@ -1,10 +1,3 @@
-/*
- * Dependencia.h
- *
- *  Created on: 14 nov. 2022
- *      Author: mlgir
- */
-
 #ifndef DEPENDENCIA_H_
 #define DEPENDENCIA_H_
 #include <iostream>

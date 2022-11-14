@@ -4,3 +4,4 @@
 void DenunciaOral::Derivar(Fecha fecha, const string &investigacion) const {
 
 }
+
