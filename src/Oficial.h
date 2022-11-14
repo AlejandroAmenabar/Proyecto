@@ -5,6 +5,10 @@
  *      Author: Alejandro
  */
 
+enum class Cargo {
+    Cadete,
+    General
+};
 #ifndef OFICIAL_H_
 #define OFICIAL_H_
 
