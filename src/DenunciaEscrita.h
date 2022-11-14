@@ -2,20 +2,25 @@
 #define PROYECTO_DENUNCIAESCRITA_H
 
 #include "Denuncia.h"
+#include <string>
 
-class Archivo;
+using namespace std;
 
 class DenunciaEscrita : public Denuncia {
 
-    Archivo *Fotocopia;
+    string Archivo;
 
 public:
 
-    DenunciaEscrita(int codigo, const string &descripcion, Imagen *firmaDemandante, Imagen *firmaOficial,
-                    Archivo *fotocopia) : Denuncia(codigo, descripcion, firmaDemandante, firmaOficial),
-                                          Fotocopia(fotocopia) {}
+    DenunciaEscrita(int codigo, const string &descripcion, const string &firmaDemandante,
+                    const string &firmaOficial, class Delito *delito, const string &archivo) : Denuncia(codigo,
+                                                                                                        descripcion,
+                                                                                                        firmaDemandante,
+                                                                                                        firmaOficial,
+                                                                                                        delito),
+                                                                                               Archivo(archivo) {}
 
-    virtual ~DenunciaEscrita();
+    ~DenunciaEscrita() override = 0;
 
     virtual void Derivar(Fecha fecha, const string &investigacion) const override;
 

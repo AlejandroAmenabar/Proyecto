@@ -1,10 +1,3 @@
-/*
- * Dependencia.cpp
- *
- *  Created on: 14 nov. 2022
- *      Author: mlgir
- */
-
 #include "Dependencia.h"
 
 Dependencia::Dependencia(int codigo, string nombre, Oficial oficial){

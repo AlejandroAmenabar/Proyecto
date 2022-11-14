@@ -2,13 +2,12 @@
 #define PROYECTO_DENUNCIA_H
 
 #include <string>
-#include <utility>
 
 class Preambulo;
+
 class Delito;
-class Imagen;
+
 class Fecha;
-class Hora;
 
 using namespace std;
 
@@ -18,28 +17,30 @@ class Denuncia {
 
     string Descripcion;
 
-    Imagen* FirmaDemandante;
+    string FirmaDemandante;
 
-    Imagen* FirmaOficial;
+    string FirmaOficial;
 
-    Delito* Delito;
+    Delito *Delito;
 
-    Preambulo* PreambuloDenuncia;
+    Preambulo *PreambuloDenuncia;
 
 public:
 
-    Denuncia(int codigo, string descripcion, Imagen *firmaDemandante, Imagen *firmaOficial) : Codigo(
-            codigo), Descripcion(std::move(descripcion)), FirmaDemandante(firmaDemandante), FirmaOficial(firmaOficial) {}
+    Denuncia(int codigo, const string &descripcion, const string &firmaDemandante, const string &firmaOficial,
+             class Delito *delito) : Codigo(codigo), Descripcion(descripcion),
+                                     FirmaDemandante(firmaDemandante),
+                                     FirmaOficial(firmaOficial), Delito(delito) {}
 
     virtual ~Denuncia();
 
     void MostrarInformacion() const;
 
-    void AgregarPreambulo(Fecha fecha, Hora hora, const string& lugar);
+    void AgregarPreambulo(const Fecha& fecha, const string &lugar);
 
-    virtual void Derivar(Fecha fecha, const string& investigacion) const = 0;
+    virtual void Derivar(Fecha fecha, const string &investigacion) const = 0;
 
-    inline const Preambulo* GetPreambulo() const { return PreambuloDenuncia; };
+    inline const Preambulo *GetPreambulo() const { return PreambuloDenuncia; };
 };
 
 

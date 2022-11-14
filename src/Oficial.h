@@ -6,6 +6,7 @@
  */
 
 enum  Cargo {
+//enum class Cargo : unsigned int {
     Cadete,
     General,
 	Administrativo,
