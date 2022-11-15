@@ -19,7 +19,7 @@ class Denuncia {
 
     string FirmaOficial;
 
-    Delito *Delito;
+    Delito *Delito; //puntero, porque copiamos la referencia del main.
 
     Preambulo *PreambuloDenuncia;
 

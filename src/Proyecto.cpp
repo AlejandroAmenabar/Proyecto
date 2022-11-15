@@ -18,7 +18,7 @@ int main() {
 
 	cout<<endl;
 
-	Oficial Gutierrez(43321142,"ale",F,"españa 4455",'M',Cargo::Cadete); //falta probar
+	Oficial Gutierrez(43321142,"ale",F,"españa 4455",'M',Cargo::Cadete);
 	Gutierrez.MostrarInfo();
 
 
