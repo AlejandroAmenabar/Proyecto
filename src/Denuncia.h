@@ -2,14 +2,21 @@
 #define PROYECTO_DENUNCIA_H
 
 #include <string>
+#include <vector>
+#include "IDatos.h"
 
-class Preambulo;
-class Delito;
 class Fecha;
+class Delito;
+class Oficial;
+class Persona;
+class Preambulo;
+class Registro;
 
 using namespace std;
 
-class Denuncia {
+class Denuncia : public IDatos{
+
+    static int Cantidad;
 
     int Codigo;
 
@@ -21,24 +28,38 @@ class Denuncia {
 
     Delito *Delito; //puntero, porque copiamos la referencia del main.
 
-    Preambulo *PreambuloDenuncia;
+    Preambulo *Preambulo;
+
+    vector<Registro *> Registros;
 
 public:
 
     Denuncia(int codigo, const string &descripcion, const string &firmaDemandante, const string &firmaOficial,
-             class Delito *delito) : Codigo(codigo), Descripcion(descripcion),
-                                     FirmaDemandante(firmaDemandante),
-                                     FirmaOficial(firmaOficial), Delito(delito) {}
+             class Delito *delito, class Preambulo *preambulo, const vector<Registro *> &registros) : Codigo(codigo),
+                                                                                                      Descripcion(
+                                                                                                              descripcion),
+                                                                                                      FirmaDemandante(
+                                                                                                              firmaDemandante),
+                                                                                                      FirmaOficial(
+                                                                                                              firmaOficial),
+                                                                                                      Delito(delito),
+                                                                                                      Preambulo(
+                                                                                                              preambulo),
+                                                                                                      Registros(
+                                                                                                              registros) {}
 
     virtual ~Denuncia();
 
-    void MostrarInformacion() const;
+    virtual void MostrarInformacion() const override;
 
-    void AgregarPreambulo(const Fecha& fecha, const string &lugar);
+    void AsignarPreambulo(const Fecha &fecha, const string &lugar, const Oficial *oficial, const Persona &demandante,
+                          const Persona &demandado);
+
+    void AgregarRegistro(const Fecha& fecha, const string& investigacion, Dependencia* dependencia);
 
     virtual void Derivar(Fecha fecha, const string &investigacion) const = 0;
 
-    inline const Preambulo *GetPreambulo() const { return PreambuloDenuncia; };
+    inline const class Preambulo *GetPreambulo() const { return Preambulo; };
 };
 
 

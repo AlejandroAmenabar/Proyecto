@@ -6,3 +6,4 @@ void DenunciaEscrita::Derivar(Fecha fecha, const string &investigacion) const {
 }
 
 
+
