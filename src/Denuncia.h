@@ -16,17 +16,13 @@ using namespace std;
 
 class Denuncia : public IDatos{
 
-    static int Cantidad;
+    static int Indice;
 
     int Codigo;
 
-    string Descripcion;
+    string Documentacion;
 
-    string FirmaDemandante;
-
-    string FirmaOficial;
-
-    Delito *Delito; //puntero, porque copiamos la referencia del main.
+    Delito *DelitoCometido; //puntero, porque copiamos la referencia del main.
 
     Preambulo *Preambulo;
 
@@ -34,32 +30,39 @@ class Denuncia : public IDatos{
 
 public:
 
-    Denuncia(int codigo, const string &descripcion, const string &firmaDemandante, const string &firmaOficial,
-             class Delito *delito, class Preambulo *preambulo, const vector<Registro *> &registros) : Codigo(codigo),
-                                                                                                      Descripcion(
-                                                                                                              descripcion),
-                                                                                                      FirmaDemandante(
-                                                                                                              firmaDemandante),
-                                                                                                      FirmaOficial(
-                                                                                                              firmaOficial),
-                                                                                                      Delito(delito),
-                                                                                                      Preambulo(
-                                                                                                              preambulo),
-                                                                                                      Registros(
-                                                                                                              registros) {}
+    Denuncia(int codigo, const string &documentacion, const string &firmaDemandante, const string &firmaOficial,
+             Delito *delito, class Preambulo *preambulo, const vector<Registro *> &registros) : Codigo(codigo),
+                                                                                                      Documentacion(documentacion),
+                                                                                                      DelitoCometido(delito),
+                                                                                                      Preambulo(preambulo),
+                                                                                                      Registros(registros) {}
 
     virtual ~Denuncia();
 
     virtual void MostrarInformacion() const override;
 
-    void AsignarPreambulo(const Fecha &fecha, const string &lugar, const Oficial *oficial, const Persona &demandante,
+    void AsignarPreambulo(const Fecha &fecha, const string &direccion, const Oficial *oficial, const Persona &demandante,
                           const Persona &demandado);
 
-    void AgregarRegistro(const Fecha& fecha, const string& investigacion, Dependencia* dependencia);
+    virtual void Derivar(Fecha fecha) const = 0;
 
-    virtual void Derivar(Fecha fecha, const string &investigacion) const = 0;
+    void AgregarInvestigacion(const string& investigacion);
 
-    inline const class Preambulo *GetPreambulo() const { return Preambulo; };
+    const Persona* BuscarPersona(int dni) const;
+
+//    void AgregarRegistro(const Fecha& fecha, const string& investigacion, DependenciaSiguiente* dependencia);
+
+//    inline const class Preambulo *GetPreambulo() const { return Preambulo; };
+
+    inline Delito* GetDelito() const { return DelitoCometido; }
+
+    vector<Registro*> GetRegistros() const { return Registros; }
+
+    const Persona* GetDemandante() const;
+
+    const Persona* GetDemandado() const;
+
+    const Fecha& GetFecha() const;
 };
 
 

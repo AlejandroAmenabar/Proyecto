@@ -1,22 +1,21 @@
 #include "Dependencia.h"
+#include "Denuncia.h"
+#include "Oficial.h"
 
-Dependencia::Dependencia(int codigo, string nombre, Oficial oficial){
-	this->Codigo=codigo;
-	this->Nombre=nombre;
+void Dependencia::MostrarInformacion() const {
+
 }
 
-Dependencia::~Dependencia() {
-	// TODO Auto-generated destructor stub
+void Dependencia::DerivarDenuncia() {
+    string Investigacion;
+    cout << "Ingrese la investigaciónn: \n";
+    cin >> Investigacion;
+
+    Denuncias.back()->AgregarInvestigacion(Investigacion);
+    Denuncias.back()->Derivar(Fecha{});
+    Denuncias.pop_back();
 }
 
-int Dependencia::GetCodigo(){
-	return this->Codigo;
-}
-
-string Dependencia::GetNombre(){
-	return this->Nombre;
-}
-
-Oficial Dependencia::GetOficial(){
-	return this->OficialDeTurno;
+void Dependencia::AgregarDenuncia(Denuncia *denuncia) {
+    Denuncias.emplace_back(denuncia);
 }

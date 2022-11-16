@@ -12,8 +12,6 @@ private:
 
     short minuto;
 
-    short segundo;
-
 	short dia;
 
 	short mes;
@@ -35,7 +33,7 @@ public:
 
 	Fecha(const short d, const short m, const short a);
 
-    Fecha(const short d, const short m, const short a, const short hora, const short minuto, const short segundo);
+    Fecha(const short d, const short m, const short a, const short hora, const short minuto);
 
 	Fecha(const Fecha &f);
 
@@ -43,6 +41,8 @@ public:
 	void setFechaActual(void);
 
 	void setFecha(const short d, const short m, const short a);
+
+    void setFecha(const short d, const short m, const short a, const short hora, const short minuto);
 
 	//Getters
 	inline short getDia() const { return dia; }
@@ -57,6 +57,7 @@ public:
 
 	//Sobrecarga de operadores
 	friend bool operator>=(Fecha fecha1, Fecha fecha2);
+
 	friend long int operator-(Fecha &fecha1, Fecha &fecha2);//Retorna la diferencia de d�as entre 2 fechas
 
 };

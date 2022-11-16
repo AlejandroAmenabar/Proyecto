@@ -25,7 +25,7 @@ public:
 
     ~DenunciaOral() override = default;
 
-    void Derivar(Fecha fecha, const string &investigacion) const override;
+    void Derivar(Fecha fecha) const override;
 };
 
 

@@ -1,21 +1,21 @@
-/*
- * Delito.cpp
- *
- *  Created on: 14 nov. 2022
- *      Author: mlgir
- */
-
+#include <string>
+#include <algorithm>
 #include "Delito.h"
+#include "Dependencia.h"
 
-Delito::Delito(int codigo, string nombre, vector<Dependencia> Dependencias) {
-	// TODO Auto-generated constructor stub
+Dependencia *Delito::ObtenerSiguienteDependencia(const string& nombre) {
+//    return std::find_if(Dependencias.begin(), Dependencias.end(), [](string n){ n= nombre;})
+    for(auto i = 0; i < Dependencias.size(); i++){
+        if(Dependencias[i]->GetNombre() == nombre){
+            return Dependencias[i + 1];
+        }
+    }
 
+    return nullptr;
 }
 
-Delito::~Delito() {
-	// TODO Auto-generated destructor stub
+Dependencia *Delito::ObtenerUltimaDependencia() {
+    return Dependencias.back();
 }
 
-Dependencia ObtenerDependencia();
-	int GetCodigo();
-	string GetNombre();
+

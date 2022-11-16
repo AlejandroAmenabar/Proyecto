@@ -6,7 +6,7 @@
 #include "Registro.h"
 //#include "Registro.h"
 
-int Denuncia::Cantidad = 0;
+int Denuncia::Indice = 0;
 
 Denuncia::~Denuncia() {
     delete Preambulo;
@@ -18,23 +18,22 @@ Denuncia::~Denuncia() {
 
 void Denuncia::MostrarInformacion() const {
     cout << "Codigo: " << Codigo << '\n';
-    cout << "Descripcion: " << Descripcion << '\n';
+    cout << "Documentacion: " << Documentacion << '\n';
     cout << "Firma del demandante: " << FirmaDemandante << '\n';
     cout << "Firma del oficial: " << FirmaOficial << '\n';
-    Delito->MostrarInformacion();
+    DelitoCometido->MostrarInformacion();
     Preambulo->MostrarInfo();
 }
 
-void
-Denuncia::AsignarPreambulo(const Fecha &fecha, const string &lugar, const Oficial *oficial, const Persona &demandante,
-                           const Persona &demandado) {
-
-    Preambulo = new class Preambulo(fecha, lugar);
+void Denuncia::AgregarInvestigacion(const string &investigacion) {
+    Registros.back()->SetInvestigacion(investigacion);
 }
 
-void Denuncia::AgregarRegistro(const Fecha &fecha, const string &investigacion, Dependencia *dependencia) {
-    auto NuevoRegistro = new Registro(fecha, investigacion, dependencia);
-    Registros.emplace_back(NuevoRegistro);
+void
+Denuncia::AsignarPreambulo(const Fecha &fecha, const string &direccion, const Oficial *oficial, const Persona &demandante,
+                           const Persona &demandado) {
+
+    Preambulo = new class Preambulo(fecha, direccion);
 }
 
 

@@ -1,29 +1,47 @@
-/*
- * Delito.h
- *
- *  Created on: 14 nov. 2022
- *      Author: mlgir
- */
-
 #ifndef DELITO_H_
 #define DELITO_H_
+
 #include <iostream>
-#include "Dependencia.h"
 #include <vector>
+
+class Dependencia;
+
 using namespace std;
 
+enum class Categoria {
+    DelitosSexuales,
+    Criminales,
+    OrdenPublico,
+    Homicidio,
+    Femicidio,
+    DIGEDROP,
+    Robo,
+    Violencia
+};
+
 class Delito {
-private:
-	int Codigo;
-	string Nombre;
-	vector<Dependencia> Dependencias;
+
+    int Codigo;
+
+    Categoria CategoriaDelito;
+
+    vector<Dependencia *> Dependencias;
+
 public:
-	Delito(int codigo, string nombre, vector<Dependencia>);
-	virtual ~Delito();
-	Dependencia ObtenerDependencia();
-	Dependencia ObtenerDependenciaSig(); //Implementar en el cpp
-	int GetCodigo();
-	string GetNombre();
+
+    Delito(int codigo, Categoria categoriaDelito, const vector<Dependencia *> &dependencias) : Codigo(codigo),
+                                                                                               CategoriaDelito(
+                                                                                                       categoriaDelito),
+                                                                                               Dependencias(
+                                                                                                       dependencias) {}
+
+    Dependencia *ObtenerSiguienteDependencia(const string &nombre);
+
+	Dependencia* ObtenerUltimaDependencia();
+
+    inline int GetCodigo() const { return Codigo; }
+
+    inline const Categoria &GetCategoria() const { return CategoriaDelito; }
 };
 
 #endif /* DELITO_H_ */

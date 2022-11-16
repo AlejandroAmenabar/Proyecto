@@ -12,17 +12,22 @@ class Registro {
 
     string Investigacion;
 
-    Dependencia *Dependencia;
+    string DependenciaSiguiente;
 
 public:
 
-    Registro(const class Fecha &fecha, const string &investigacion, class Dependencia *dependencia) : Fecha(fecha),
-                                                                                                      Investigacion(investigacion),
-                                                                                                      Dependencia(dependencia) {}
+    explicit Registro(const class Fecha &fecha, const string &dependenciaSig) : Fecha(fecha),
+                                                                                DependenciaSiguiente(dependenciaSig) {}
 
     void MostrarInformacion() const;
 
-    inline class Dependencia *ObtenerDependencia() const { return Dependencia; }
+    inline void SetInvestigacion(const string &investigacion) { Investigacion = investigacion; }
+
+    inline const class Fecha &GetFecha() const { return Fecha; }
+
+    inline const string &GetInvestigacion() const { return Investigacion; }
+
+    inline const string &GetDepedenciaSig() const { return DependenciaSiguiente; }
 
 };
 

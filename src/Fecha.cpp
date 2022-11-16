@@ -11,7 +11,8 @@ Fecha::Fecha() {
 Fecha::Fecha(short int d, short int m, short int a) {
 	setFecha(d, m, a);
 }
-Fecha::Fecha(const short d, const short m, const short a, const short hora, const short minuto, const short segundo) {
+Fecha::Fecha(const short d, const short m, const short a, const short hora, const short minuto) {
+
 
 }
 
@@ -29,7 +30,6 @@ void Fecha::setFechaActual(void) {
 	mes = (short) ptr->tm_mon + 1;
 	anio = (short) ptr->tm_year + 1900;
 }
-
 void Fecha::setFecha(const short d, const short m, const short a) {
 	dia = d;
 	mes = m;
@@ -38,9 +38,22 @@ void Fecha::setFecha(const short d, const short m, const short a) {
 		setFechaActual();
 	}
 }
+void Fecha::setFecha(const short d, const short m, const short a, const short hora, const short minuto) {
+    dia = d;
+    mes = m;
+    anio = a;
+    this->hora = hora;
+    this->minuto = minuto;
+    if(!esAnioValido() || !esMesValido() || !esDiaValido()){
+        setFechaActual();
+    }
+}
+
 bool Fecha::esAnioValido() const {
 	return (anio > 0);
 }
+
+
 bool Fecha::esMesValido() const {
 	return (mes >= 1 && mes <= 12);
 }
@@ -48,7 +61,6 @@ bool Fecha::esMesValido() const {
 bool Fecha::esDiaValido() const {
 	return (dia >= 1 && dia <= diasEnMes(mes));
 }
-
 
 short Fecha::diasEnMes(const short m) const{
 	short cantidadDias = 0;
@@ -78,7 +90,6 @@ short Fecha::diasEnMes(const short m) const{
 	}
 	return cantidadDias;
 }
-
 bool Fecha::esAnioBisiesto() const {
 	return ((anio % 4 == 0 && anio % 100 != 0) || anio % 400 == 0);
 }
@@ -102,6 +113,7 @@ long int Fecha::cantidadDiasDelAnio(){
 		}
 		return cantidadDias;
 }
+
 bool esAnioBisiesto(int anio){
 	return ((anio % 4 == 0 && anio % 100 != 0) || anio % 400 == 0);
 }
