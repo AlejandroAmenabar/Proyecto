@@ -35,7 +35,7 @@ public:
                                                                                                Dependencias(
                                                                                                        dependencias) {}
 
-    Dependencia *ObtenerSiguienteDependencia(const string &nombre);
+    Dependencia *ObtenerSiguienteDependencia(const string &Dependencia);
 
 	Dependencia* ObtenerUltimaDependencia();
 
