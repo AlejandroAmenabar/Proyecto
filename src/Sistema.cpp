@@ -55,6 +55,11 @@ void Sistema::RealizarDenuncia(Delito *delito, Persona *demandado, Persona *dema
     cout << "Ingrese la documentacion\n";
     cin >> documentacion;
 
+    fflush(stdin);
+    string direccionDelito;
+    cout << "Ingrese donde se cometio el delito\n";
+    cin >> direccionDelito;
+
     Denuncia *NuevaDenuncia = nullptr;
 
     if (tipoDenuncia) {
@@ -66,7 +71,8 @@ void Sistema::RealizarDenuncia(Delito *delito, Persona *demandado, Persona *dema
         cin >> archivo;
 
         NuevaDenuncia = new DenunciaEscrita(documentacion, delito, archivo);
-//        Denuncias.insert(Denuncias.end(), NuevaDenuncia);
+        NuevaDenuncia->AsignarPreambulo(Fecha{}, direccionDelito, oficialACargo, demandante, demandado);
+        Denuncias.emplace_back(NuevaDenuncia);
     } else {
         cout << "-- Denuncia Oral --\n";
 
@@ -77,14 +83,9 @@ void Sistema::RealizarDenuncia(Delito *delito, Persona *demandado, Persona *dema
 
         NuevaDenuncia = new DenunciaOral(documentacion, delito, descripcion);
         Denuncias.emplace_back(NuevaDenuncia);
+        NuevaDenuncia->AsignarPreambulo(Fecha{}, direccionDelito, oficialACargo, demandante, demandado);
     }
 
-    fflush(stdin);
-    string direccionDelito;
-    cout << "Ingrese donde se cometio el delito\n";
-    cin >> direccionDelito;
-
-//    NuevaDenuncia->AsignarPreambulo(Fecha{}, direccionDelito, oficialACargo, demandante, demandado);
 
 //    Denuncias.emplace_back(NuevaDenuncia); // Se agrega denuncia al vector de Denuncias del Sistema
 //    Comisarias[comisaria]->AgregarDenuncia(NuevaDenuncia); // Se agrega denuncia al vector de Denuncias de la Comisaria
