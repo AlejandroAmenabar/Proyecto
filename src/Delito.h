@@ -8,7 +8,7 @@ class Dependencia;
 
 using namespace std;
 
-enum class Categoria {
+enum Categoria {
     DelitosSexuales,
     Criminales,
     OrdenPublico,
@@ -27,6 +27,9 @@ class Delito {
 
     vector<Dependencia *> Dependencias;
 
+    string Categorias[8] = {"Delitos Sexuales", "Criminales", "Orden Público", "Homicidio", "Femicidio", "DIGEDROP",
+                            "Robo", "Violencia"};
+
 public:
 
     Delito(int codigo, Categoria categoriaDelito, const vector<Dependencia *> &dependencias) : Codigo(codigo),
@@ -35,9 +38,11 @@ public:
                                                                                                Dependencias(
                                                                                                        dependencias) {}
 
+    void MostrarInformacion() const;
+
     Dependencia *ObtenerSiguienteDependencia(const string &Dependencia);
 
-	Dependencia* ObtenerUltimaDependencia();
+    Dependencia *ObtenerUltimaDependencia();
 
     inline int GetCodigo() const { return Codigo; }
 

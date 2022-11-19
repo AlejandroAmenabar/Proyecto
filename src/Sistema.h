@@ -5,8 +5,12 @@
 #include <vector>
 #include "Fecha.h"
 
+class Persona;
+
 class Comisaria;
+
 class Denuncia;
+class Delito;
 class Oficial;
 
 using namespace std;
@@ -17,19 +21,21 @@ class Sistema {
 
     string Nombre;
 
-    vector<Comisaria*> Comisarias;
+    vector<Comisaria *> Comisarias;
 
-    vector<Denuncia*> Denuncias;
+    vector<Denuncia *> Denuncias;
 
 public:
 
-    Sistema(int codigo, const string& nombre) : Codigo(codigo), Nombre(nombre) {}
+    Sistema(int codigo, const string &nombre) : Codigo(codigo), Nombre(nombre) {}
 
     virtual ~Sistema();
 
-    void AgregarComisaria(int codigo, const string& direccion, vector<Oficial*> oficiales);
+    void AgregarComisaria(const string &direccion, vector<Oficial *> oficiales);
 
-    void MostrarDenuncias(const Fecha& fecha) const;
+    void RealizarDenuncia(Delito* delito, Persona *demandado, Persona *demandante, Oficial *oficialACargo);
+
+    void MostrarDenuncias(Fecha &fecha) const;
 
     void MostrarComisarias() const;
 
@@ -37,8 +43,9 @@ public:
 
     inline int GetCodigo() const { return Codigo; }
 
-    inline const string& GetNombre() const { return Nombre; }
-};
+    inline const string &GetNombre() const { return Nombre; }
 
+    inline const vector<Comisaria *> &GetComisarias() const { return Comisarias; }
+};
 
 #endif //PROYECTO_SISTEMA_H

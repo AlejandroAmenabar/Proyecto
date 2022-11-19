@@ -1,5 +1,6 @@
-#include "Oficial.h"
 #include <iostream>
+#include "Oficial.h"
+#include "Denuncia.h"
 
 using namespace std;
 

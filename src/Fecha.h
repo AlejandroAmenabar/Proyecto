@@ -6,7 +6,6 @@
 using namespace std;
 
 class Fecha {
-private:
 
     short hora;
 
@@ -60,6 +59,7 @@ public:
 
 	friend long int operator-(Fecha &fecha1, Fecha &fecha2);//Retorna la diferencia de d�as entre 2 fechas
 
+    friend bool operator==(Fecha& fecha1, Fecha& fecha2);
 };
 
 ostream& operator<<(ostream &salida,const Fecha &f);

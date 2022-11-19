@@ -147,6 +147,13 @@ long int operator-(Fecha &fecha1, Fecha &fecha2){
 	return dif;
 }
 
+bool operator==(Fecha& fecha1, Fecha& fecha2) {
+    bool dia = fecha1.dia == fecha2.dia;
+    bool mes = fecha1.mes == fecha2.mes;
+    bool anio = fecha1.anio == fecha2.anio;
+    return dia && mes && anio;
+}
+
 ostream& operator<<(ostream &salida,const Fecha &f) {
 	salida.fill('0');
 	salida << setw(2) << f.getDia() << "/" << setw(2) << f.getMes() << "/" << setw(4)

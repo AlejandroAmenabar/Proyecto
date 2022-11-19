@@ -12,21 +12,12 @@ class DenunciaEscrita : public Denuncia {
 
 public:
 
-    DenunciaEscrita(int codigo, const string &descripcion, const string &firmaDemandante,
-                    const string &firmaOficial, class Delito *delito, class Preambulo *preambuloDenuncia,
-                    const vector<Registro *> &registros, const string &archivo) : Denuncia(codigo,
-                                                                                           descripcion,
-                                                                                           firmaDemandante,
-                                                                                           firmaOficial,
-                                                                                           delito,
-                                                                                           preambuloDenuncia,
-                                                                                           registros),
-                                                                                  Archivo(archivo) {}
+    DenunciaEscrita(const string &documentacion, Delito *delito,
+                    const string &archivo) : Denuncia(documentacion, delito), Archivo(archivo) {}
 
     ~DenunciaEscrita() override = default;
 
-    virtual void Derivar(Fecha fecha, const string &investigacion) const override;
-
+    void Derivar(const Fecha &FechaD) const override;
 };
 
 

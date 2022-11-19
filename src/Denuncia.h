@@ -6,15 +6,22 @@
 #include "IDatos.h"
 
 class Fecha;
+
+class Comisaria;
+
 class Delito;
+
 class Oficial;
+
 class Persona;
+
 class Preambulo;
+
 class Registro;
 
 using namespace std;
 
-class Denuncia : public IDatos{
+class Denuncia : public IDatos {
 
     static int Indice;
 
@@ -24,45 +31,38 @@ class Denuncia : public IDatos{
 
     Delito *DelitoCometido; //puntero, porque copiamos la referencia del main.
 
-    Preambulo *Preambulo;
-
     vector<Registro *> Registros;
+
+protected:
+
+    Preambulo *PreambuloD;
 
 public:
 
-    Denuncia(int codigo, const string &documentacion, const string &firmaDemandante, const string &firmaOficial,
-             Delito *delito, class Preambulo *preambulo, const vector<Registro *> &registros) : Codigo(codigo),
-                                                                                                      Documentacion(documentacion),
-                                                                                                      DelitoCometido(delito),
-                                                                                                      Preambulo(preambulo),
-                                                                                                      Registros(registros) {}
+    Denuncia(const string &documentacion, Delito *delito);
 
     virtual ~Denuncia();
 
     virtual void MostrarInformacion() const override;
 
-    void AsignarPreambulo(const Fecha &fecha, const string &direccion, const Oficial *oficial, const Persona &demandante,
-                          const Persona &demandado);
+    void AsignarPreambulo(const Fecha &fecha, const string &direccion, Oficial *oficial, Persona *demandante,
+                          Persona *demandado);
 
-    virtual void Derivar(Fecha fecha) const = 0;
+    virtual void Derivar(const Fecha &fecha) const = 0;
 
-    void AgregarInvestigacion(const string& investigacion);
+    void AgregarInvestigacion(const string &investigacion);
 
-    const Persona* BuscarPersona(int dni) const;
+    Persona *BuscarPersona(int dni) const;
 
-//    void AgregarRegistro(const Fecha& fecha, const string& investigacion, DependenciaSiguiente* dependencia);
+    inline Delito *GetDelito() const { return DelitoCometido; }
 
-//    inline const class Preambulo *GetPreambulo() const { return Preambulo; };
+    vector<Registro *> GetRegistros() const { return Registros; }
 
-    inline Delito* GetDelito() const { return DelitoCometido; }
+    Persona *GetDemandante() const;
 
-    vector<Registro*> GetRegistros() const { return Registros; }
+    Persona *GetDemandado() const;
 
-    const Persona* GetDemandante() const;
-
-    const Persona* GetDemandado() const;
-
-    const Fecha& GetFecha() const;
+    Fecha &GetFecha() const;
 };
 
 

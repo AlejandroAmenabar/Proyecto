@@ -30,7 +30,7 @@ public:
 
     void MostrarInformacion() const;
 
-    inline const Fecha &GetFecha() const { return FechaP; }
+    inline Fecha &GetFecha() { return FechaP; }
 
     inline const string &GetDireccion() const { return Direccion; }
 

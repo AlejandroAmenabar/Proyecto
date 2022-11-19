@@ -3,7 +3,9 @@
 #include "Oficial.h"
 
 void Dependencia::MostrarInformacion() const {
-
+    cout << "-- Dependencia --\n";
+    cout << "Codigo:" << Codigo << '\n';
+    cout << "Nombre: " << Nombre << '\n';
 }
 
 void Dependencia::DerivarDenuncia() {

@@ -1,5 +1,10 @@
 #include <iostream>
 #include <vector>
+#include "Delito.h"
+#include "Preambulo.h"
+#include "Comisaria.h"
+#include "Dependencia.h"
+#include "Registro.h"
 #include "Sistema.h"
 #include "Persona.h"
 #include "Oficial.h"
@@ -7,23 +12,40 @@
 using namespace std;
 
 int main() {
-    Sistema Tucuman {234, "Tucumán"};
-	Fecha F;
+    Sistema Tucuman{234, "Tucumán"};
+    Fecha F;
 
-	Persona Ale(43321142, "ale", F, "españa 4455", 'M');
-	Ale.MostrarInfo();
+    Dependencia Fiscalia {0, "Fiscalia"};
+    Dependencia Criminalistica {1, "Criminalistica"};
+    Dependencia Fraude {2, "Fraude"};
+    Dependencia Drogas {3, "Drogas"};
 
-    Persona Mariano(2341234, "mariano", F, "chile 4455", 'M');
-    Mariano.MostrarInfo();
+    vector<Dependencia*> DepedenciasCriminesSexuales {&Fiscalia, &Criminalistica, &Fraude};
+    Delito Sexual {0, Categoria::DelitosSexuales, DepedenciasCriminesSexuales};
 
-	cout<<endl;
+    Persona Demandado(43321142, "ale", F, "españa 4455", 'M');
+    Demandado.MostrarInfo();
 
-    Oficial Ector(321423,"Ector Lavo",F,"rivadavia",'M',Cargo::Cadete);
-    Oficial Wereniski(142,"wereniski",F,"chile",'F',Cargo::Cadete);
-    Oficial Luchoni(324,"luchoni",F,"chile234",'F',Cargo::Cadete);
-    Oficial obstrichy(324,"obstrychi",F,"asdklfjñas",'F',Cargo::Cadete);
+    Persona Demandante(2341234, "mariano", F, "chile 4455", 'M');
+    Demandante.MostrarInfo();
 
-    vector<Oficial*> Oficiales {&Ector, &Wereniski, &Luchoni, &obstrichy};
+    Oficial Ector(321423, "Ector Lavo", F, "rivadavia", 'M', Cargo::Cadete);
+    Oficial Wereniski(142, "wereniski", F, "chile", 'F', Cargo::Cadete);
+    Oficial Luchoni(324, "luchoni", F, "chile234", 'F', Cargo::Cadete);
+    Oficial obstrichy(324, "obstrychi", F, "asdklfjñas", 'F', Cargo::Cadete);
 
-	return 0;
+    vector<Oficial *> Oficiales1{&Ector, &Wereniski, &Luchoni, &obstrichy};
+    vector<Oficial *> Oficiales2{&Wereniski, &Luchoni, &obstrichy};
+    vector<Oficial *> Oficiales3{&Luchoni, &obstrichy};
+
+    Tucuman.AgregarComisaria("Alberdi", Oficiales1);
+    Tucuman.AgregarComisaria("Las Talitas", Oficiales2);
+    Tucuman.AgregarComisaria("Alderetes", Oficiales3);
+
+    cout << "Ingrese el tipo de denuncia";
+    cout << "0 - Sexuales, 1 - Anales, 2- Pene ales";
+
+    cout << "Ingrese la comisaria, 1- alberdi";
+    Tucuman.RealizarDenuncia(&Sexual, &Demandado, &Demandante, &Ector);
+    return 0;
 }

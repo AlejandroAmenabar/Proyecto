@@ -7,10 +7,14 @@
 
 int Denuncia::Indice = 0;
 
-Denuncia::~Denuncia() {
-    delete Preambulo;
+Denuncia::Denuncia(const string &documentacion, Delito *delito) : Documentacion(documentacion), DelitoCometido(delito) {
+    Codigo = Indice++;
+}
 
-    for(auto Registro : Registros){
+Denuncia::~Denuncia() {
+    delete PreambuloD;
+
+    for (auto Registro: Registros) {
         delete Registro;
     }
 }
@@ -19,18 +23,32 @@ void Denuncia::MostrarInformacion() const {
     cout << "Codigo: " << Codigo << '\n';
     cout << "Documentacion: " << Documentacion << '\n';
     DelitoCometido->MostrarInformacion();
-    Preambulo->MostrarInfo();
+    PreambuloD->MostrarInformacion();
 }
 
 void Denuncia::AgregarInvestigacion(const string &investigacion) {
     Registros.back()->SetInvestigacion(investigacion);
 }
 
-void
-Denuncia::AsignarPreambulo(const Fecha &fecha, const string &direccion, const Oficial *oficial, const Persona &demandante,
-                           const Persona &demandado) {
-
-    Preambulo = new class Preambulo(fecha, direccion);
+void Denuncia::AsignarPreambulo(const Fecha &fecha, const string &direccion, Oficial *oficial, Persona *demandante,
+                                Persona *demandado) {
+    PreambuloD = new class Preambulo(fecha, direccion, demandante, demandado, oficial);
 }
 
+Persona *Denuncia::BuscarPersona(int dni) const {
+    return nullptr;
+}
 
+Fecha &Denuncia::GetFecha() const {
+    return PreambuloD->GetFecha();
+}
+
+Persona *Denuncia::GetDemandante() const {
+    // TODO
+    return nullptr;
+}
+
+Persona *Denuncia::GetDemandado() const {
+    // TODO
+    return nullptr;
+}

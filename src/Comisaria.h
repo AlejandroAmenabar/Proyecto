@@ -6,7 +6,7 @@
 #include "Fecha.h"
 
 class Denuncia;
-class Persona;
+class Oficial;
 
 using namespace std;
 
@@ -20,17 +20,19 @@ class Comisaria {
 
     vector<Denuncia *> Denuncias;
 
-    vector<Persona *> Oficiales;
+    vector<Oficial *> Oficiales;
 
 public:
 
-    Comisaria(int codigo, const string &direccion, const vector<Denuncia *> &denuncias,
-              const vector<Persona *> &oficiales) : Codigo(codigo), Direccion(direccion), Denuncias(denuncias),
-                                                    Oficiales(oficiales) {}
+    Comisaria(const string &direccion, const vector<Oficial *> &oficiales);
 
-    void MostrarDenuncias(const Fecha& fecha) const;
+    void MostrarInformacion() const;
 
-    void AgregarOficial(Persona *oficial);
+    void MostrarDenuncias(Fecha fecha) const;
+
+    void AgregarDenuncia(Denuncia *denuncia);
+
+    void AgregarOficial(Oficial *oficial);
 
     inline int GetCodigo() const { return Codigo; }
 

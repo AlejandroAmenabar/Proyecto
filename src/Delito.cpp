@@ -19,4 +19,14 @@ Dependencia *Delito::ObtenerUltimaDependencia() {
     return Dependencias.back();
 }
 
+void Delito::MostrarInformacion() const {
+    cout << "-- Delito --\n";
+    cout << "Codigo: " << Codigo << '\n';
+    cout << "Categoria: " << Categorias[CategoriaDelito] << '\n';
+
+    for(const auto& Dependencia : Dependencias){
+        Dependencia->MostrarInformacion();
+    }
+}
+
 

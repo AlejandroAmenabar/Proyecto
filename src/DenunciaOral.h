@@ -4,6 +4,8 @@
 #include "Denuncia.h"
 #include <string>
 
+class Preambulo;
+
 using namespace std;
 
 class DenunciaOral : public Denuncia {
@@ -12,20 +14,11 @@ class DenunciaOral : public Denuncia {
 
 public:
 
-    DenunciaOral(int codigo, const string &descripcion, const string &firmaDemandante,
-                 const string &firmaOficial, class Delito *delito, class Preambulo *preambuloDenuncia,
-                 const vector<Registro *> &registros, const string &descripcion1) : Denuncia(codigo,
-                                                                                             descripcion,
-                                                                                             firmaDemandante,
-                                                                                             firmaOficial,
-                                                                                             delito,
-                                                                                             preambuloDenuncia,
-                                                                                             registros),
-                                                                                    Descripcion(descripcion1) {}
+    DenunciaOral(const string &documentacion, Delito *delito, const string &descripcion);
 
     ~DenunciaOral() override = default;
 
-    void Derivar(Fecha fecha) const override;
+    void Derivar(const Fecha& FechaD) const override;
 };
 
 

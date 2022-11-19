@@ -3,15 +3,14 @@
 #include "Dependencia.h"
 #include "Fecha.h"
 #include "Registro.h"
+#include "Oficial.h"
+#include "Preambulo.h"
 
-void DenunciaEscrita::Derivar(Fecha fecha, const string &investigacion) const {
-//    string DependenciaActual = GetRegistros().back()->GetDepedenciaSig();
+void DenunciaEscrita::Derivar(const Fecha &FechaD) const {
     Dependencia *Dependencia = GetDelito()->ObtenerUltimaDependencia();
     Dependencia->AgregarDenuncia((Denuncia *) this);
 
-    Registro *NuevoRegistro = new Registro(fecha, Dependencia->GetNombre());
+    Registro *NuevoRegistro = new Registro(FechaD, Dependencia->GetNombre());
     GetRegistros().emplace_back(NuevoRegistro);
 }
-
-
 
