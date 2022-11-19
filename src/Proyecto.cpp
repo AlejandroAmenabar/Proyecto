@@ -41,11 +41,6 @@ int main() {
     Tucuman.AgregarComisaria("Alberdi", Oficiales1);
     Tucuman.AgregarComisaria("Las Talitas", Oficiales2);
     Tucuman.AgregarComisaria("Alderetes", Oficiales3);
-
-    cout << "Ingrese el tipo de denuncia";
-    cout << "0 - Sexuales, 1 - Anales, 2- Pene ales";
-
-    cout << "Ingrese la comisaria, 1- alberdi";
     Tucuman.RealizarDenuncia(&Sexual, &Demandado, &Demandante, &Ector);
     return 0;
 }

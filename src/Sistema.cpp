@@ -52,7 +52,7 @@ void Sistema::RealizarDenuncia(Delito *delito, Persona *demandado, Persona *dema
 
     fflush(stdin);
     string documentacion;
-    cout << "Ingrese la documentacion";
+    cout << "Ingrese la documentacion\n";
     cin >> documentacion;
 
     Denuncia *NuevaDenuncia = nullptr;
