@@ -42,7 +42,7 @@ void Sistema::MostrarPersona(int dni) const {
 
 void Sistema::RealizarDenuncia(Delito *delito, Persona *demandado, Persona *demandante, Oficial *oficialACargo) {
     int comisaria;
-    cout << "Ingrese la comisaria\n";
+    cout << "Ingrese la comisaria(0- Alberdi, 1 - Las Talitas, 2 - Alderetes)\n";
     cin >> comisaria;
 
     fflush(stdin);
@@ -82,10 +82,11 @@ void Sistema::RealizarDenuncia(Delito *delito, Persona *demandado, Persona *dema
         cin >> descripcion;
 
         NuevaDenuncia = new DenunciaOral(documentacion, delito, descripcion);
-        Denuncias.emplace_back(NuevaDenuncia);
         NuevaDenuncia->AsignarPreambulo(Fecha{}, direccionDelito, oficialACargo, demandante, demandado);
+        Denuncias.emplace_back(NuevaDenuncia);
     }
 
+        NuevaDenuncia->MostrarInformacion();
 
 //    Denuncias.emplace_back(NuevaDenuncia); // Se agrega denuncia al vector de Denuncias del Sistema
 //    Comisarias[comisaria]->AgregarDenuncia(NuevaDenuncia); // Se agrega denuncia al vector de Denuncias de la Comisaria
