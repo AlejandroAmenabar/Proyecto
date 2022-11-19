@@ -148,10 +148,7 @@ long int operator-(Fecha &fecha1, Fecha &fecha2){
 }
 
 bool operator==(Fecha& fecha1, Fecha& fecha2) {
-    bool dia = fecha1.dia == fecha2.dia;
-    bool mes = fecha1.mes == fecha2.mes;
-    bool anio = fecha1.anio == fecha2.anio;
-    return dia && mes && anio;
+    return fecha1.dia == fecha2.dia && fecha1.mes == fecha2.mes && fecha1.anio == fecha2.anio;
 }
 
 ostream& operator<<(ostream &salida,const Fecha &f) {

@@ -5,7 +5,7 @@
 #include "Registro.h"
 #include "DenunciaOral.h"
 
-void DenunciaOral::Derivar(const Fecha &FechaD) const {
+void DenunciaOral::Derivar(const Fecha &FechaD) {
     string DependenciaActual = GetRegistros().back()->GetDepedenciaSig();
     Dependencia *DependenciaSiguiente = GetDelito()->ObtenerSiguienteDependencia(DependenciaActual);
     DependenciaSiguiente->AgregarDenuncia((Denuncia *) this);
@@ -13,8 +13,3 @@ void DenunciaOral::Derivar(const Fecha &FechaD) const {
     Registro *NuevoRegistro = new Registro(FechaD, DependenciaSiguiente->GetNombre());
     GetRegistros().emplace_back(NuevoRegistro);
 }
-
-DenunciaOral::DenunciaOral(const string &documentacion, Delito *delito,
-                           const string &descripcion) : Denuncia(documentacion,
-                                                                 delito),
-                                                                 Descripcion(descripcion) {}

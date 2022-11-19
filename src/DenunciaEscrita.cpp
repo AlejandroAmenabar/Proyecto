@@ -6,7 +6,7 @@
 #include "Oficial.h"
 #include "Preambulo.h"
 
-void DenunciaEscrita::Derivar(const Fecha &FechaD) const {
+void DenunciaEscrita::Derivar(const Fecha &FechaD) {
     Dependencia *Dependencia = GetDelito()->ObtenerUltimaDependencia();
     Dependencia->AgregarDenuncia((Denuncia *) this);
 

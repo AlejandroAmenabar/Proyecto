@@ -7,8 +7,6 @@
 
 class Fecha;
 
-class Comisaria;
-
 class Delito;
 
 class Oficial;
@@ -33,8 +31,6 @@ class Denuncia : public IDatos {
 
     vector<Registro *> Registros;
 
-protected:
-
     Preambulo *PreambuloD;
 
 public:
@@ -48,22 +44,23 @@ public:
     void AsignarPreambulo(const Fecha &fecha, const string &direccion, Oficial *oficial, Persona *demandante,
                           Persona *demandado);
 
-    virtual void Derivar(const Fecha &fecha) const = 0;
+    virtual void Derivar(const Fecha &fecha) = 0;
 
     void AgregarInvestigacion(const string &investigacion);
 
     Persona *BuscarPersona(int dni) const;
-
-    inline Delito *GetDelito() const { return DelitoCometido; }
-
-    vector<Registro *> GetRegistros() const { return Registros; }
 
     Persona *GetDemandante() const;
 
     Persona *GetDemandado() const;
 
     Fecha &GetFecha() const;
-};
 
+    inline Delito *GetDelito() const { return DelitoCometido; }
+
+    inline const Preambulo *GetPreambulo() const { return PreambuloD; }
+
+    inline vector<Registro *> GetRegistros() { return Registros; }
+};
 
 #endif //PROYECTO_DENUNCIA_H

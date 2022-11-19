@@ -14,11 +14,12 @@ class DenunciaOral : public Denuncia {
 
 public:
 
-    DenunciaOral(const string &documentacion, Delito *delito, const string &descripcion);
+    DenunciaOral(const string &documentacion, Delito *delito, const string &descripcion) : Denuncia(
+            documentacion, delito), Descripcion(descripcion) {}
 
     ~DenunciaOral() override = default;
 
-    void Derivar(const Fecha& FechaD) const override;
+    void Derivar(const Fecha &FechaD) override;
 };
 
 
