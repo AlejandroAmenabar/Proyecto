@@ -1,10 +1,3 @@
-/*
- * Persona.h
- *
- *  Created on: 14 nov. 2022
- *      Author: Alejandro
- */
-
 #ifndef PERSONA_H_
 #define PERSONA_H_
 

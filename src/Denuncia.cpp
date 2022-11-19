@@ -4,7 +4,6 @@
 #include "Fecha.h"
 #include "Preambulo.h"
 #include "Registro.h"
-//#include "Registro.h"
 
 int Denuncia::Indice = 0;
 
@@ -19,8 +18,6 @@ Denuncia::~Denuncia() {
 void Denuncia::MostrarInformacion() const {
     cout << "Codigo: " << Codigo << '\n';
     cout << "Documentacion: " << Documentacion << '\n';
-    cout << "Firma del demandante: " << FirmaDemandante << '\n';
-    cout << "Firma del oficial: " << FirmaOficial << '\n';
     DelitoCometido->MostrarInformacion();
     Preambulo->MostrarInfo();
 }

@@ -1,22 +1,13 @@
 #include "Preambulo.h"
+#include "Persona.h"
+#include "Oficial.h"
 
-Preambulo::Preambulo(Fecha fecha, string lugar) {
-	this->FechaP=fecha;
-	this->Lugar=lugar;
+void Preambulo::MostrarInformacion() const {
+    cout << "-- Preambulo --\n";
+    cout << "Fecha: " << FechaP << '\n';
+    cout << "Lugar: " << Direccion << '\n';
+    Demandado->MostrarInfo();
+    Demandante->MostrarInfo();
+    OficialACargo->MostrarInfo();
 }
 
-Preambulo::~Preambulo() {
-}
-
-Fecha Preambulo::GetFecha(){
-	return this->FechaP;
-}
-
-string Preambulo::GetLugar(){
-	return this->Lugar;
-}
-
-void Preambulo::MostrarInfo(){
-	cout << "Fecha: " << FechaP << endl;
-	cout << "Lugar: " << Lugar << endl;
-}
