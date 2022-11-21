@@ -26,6 +26,8 @@ public:
 
     Comisaria(const string &direccion, const vector<Oficial *> &oficiales);
 
+    void DerivarDenuncia();
+
     void MostrarInformacion() const;
 
     void MostrarDenuncias(Fecha fecha) const;

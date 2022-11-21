@@ -40,9 +40,11 @@ public:
 
     void MostrarInformacion() const;
 
-    Dependencia *ObtenerSiguienteDependencia(const string &Dependencia);
+    Dependencia* ObtenerPrimeraDependencia() const; // Para derivar desde la Comisaría
 
-    Dependencia *ObtenerUltimaDependencia();
+    Dependencia *ObtenerSiguienteDependencia(const string &Dependencia) const; // Para derivar desde Dependencia
+
+    Dependencia *ObtenerUltimaDependencia() const; // Para las Denuncias Escritas, va directo a la Fiscalía
 
     inline int GetCodigo() const { return Codigo; }
 

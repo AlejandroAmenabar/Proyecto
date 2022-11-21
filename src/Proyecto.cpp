@@ -12,6 +12,36 @@
 using namespace std;
 
 int main() {
+    bool EstaActivo = true;
+
+//    while(EstaActivo){
+//        cout << "---- Sistema Comisaría ----\n";
+//        cout << "1. Crear Denuncia\n";
+//        cout << "2. Mostrar Denuncias\n";
+//        cout << "3. Crear Oficial\n";
+//        cout << "4. Crear Denuncia\n";
+//        cout << "5. Buscar Persona por id\n";
+//        cout << "?. Salir del sistema\n";
+//
+//        int OpcionIngresada;
+//        cin >> OpcionIngresada;
+//
+//        switch (OpcionIngresada){
+//            case 0:
+//                break;
+//            case 1:
+//                break;
+//            case 2:
+//                break;
+//            case 5:
+////                Sistema.Buscarpersona();
+//                break;
+//            default:
+//                EstaActivo = false;
+//                break;
+//        }
+//    }
+
     Sistema Tucuman{234, "Tucumán"};
     Fecha F;
 
@@ -20,8 +50,9 @@ int main() {
     Dependencia Fraude {2, "Fraude"};
     Dependencia Drogas {3, "Drogas"};
 
-    vector<Dependencia*> DepedenciasCriminesSexuales {&Fiscalia, &Criminalistica, &Fraude};
+    vector<Dependencia*> DepedenciasCriminesSexuales {&Criminalistica, &Fraude, &Fiscalia};
     Delito Sexual {0, Categoria::DelitosSexuales, DepedenciasCriminesSexuales};
+//    std::cout << Sexual.ObtenerPrimeraDependencia()->GetNombre() << '\n';
 
     Persona Demandado(43321142, "ale", F, "españa 4455", 'M');
     Demandado.MostrarInfo();
@@ -42,5 +73,7 @@ int main() {
     Tucuman.AgregarComisaria("Las Talitas", Oficiales2);
     Tucuman.AgregarComisaria("Alderetes", Oficiales3);
     Tucuman.RealizarDenuncia(&Sexual, &Demandado, &Demandante, &Ector);
+    Tucuman.GetComisarias()[0]->DerivarDenuncia();
+    Criminalistica.DerivarDenuncia();
     return 0;
 }

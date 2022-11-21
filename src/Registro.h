@@ -12,6 +12,9 @@ class Registro {
 
     string Investigacion;
 
+    // TODO Opcional
+//    string DependenciaActual;
+
     string DependenciaSiguiente;
 
 public:
@@ -21,7 +24,7 @@ public:
 
     void MostrarInformacion() const;
 
-    inline void SetInvestigacion(const string &investigacion) { Investigacion = investigacion; }
+    inline void AsignarInvestigacion(const string &investigacion) { Investigacion = investigacion; }
 
     inline const class Fecha &GetFecha() const { return Fecha; }
 

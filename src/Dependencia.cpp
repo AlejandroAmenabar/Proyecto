@@ -9,11 +9,13 @@ void Dependencia::MostrarInformacion() const {
 }
 
 void Dependencia::DerivarDenuncia() {
-    string Investigacion;
-    cout << "Ingrese la investigaciónn: \n";
-    cin >> Investigacion;
+//    string Investigacion;
+//    cout << "Ingrese la investigacion: \n";
+//    cin >> Investigacion;
 
-    Denuncias.back()->AgregarInvestigacion(Investigacion);
+    // TODO crear registro antes
+
+//    Denuncias.back()->AgregarInvestigacion(Investigacion);
     Denuncias.back()->Derivar(Fecha{});
     Denuncias.pop_back();
 }

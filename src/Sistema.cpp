@@ -41,53 +41,44 @@ void Sistema::MostrarPersona(int dni) const {
 }
 
 void Sistema::RealizarDenuncia(Delito *delito, Persona *demandado, Persona *demandante, Oficial *oficialACargo) {
-    int comisaria;
+    int Comisaria;
     cout << "Ingrese la comisaria(0- Alberdi, 1 - Las Talitas, 2 - Alderetes)\n";
-    cin >> comisaria;
+    cin >> Comisaria;
 
-    fflush(stdin);
-    int tipoDenuncia;
+    int TipoDenuncia;
     cout << "Oral o escrita (0 - oral, 1 - escrita)\n";
-    cin >> tipoDenuncia;
+    cin >> TipoDenuncia;
 
-    fflush(stdin);
-    string documentacion;
+    string Documentacion;
     cout << "Ingrese la documentacion\n";
-    cin >> documentacion;
+    cin >> Documentacion;
 
-    fflush(stdin);
-    string direccionDelito;
+    string DireccionDelito;
     cout << "Ingrese donde se cometio el delito\n";
-    cin >> direccionDelito;
+    cin >> DireccionDelito;
 
     Denuncia *NuevaDenuncia = nullptr;
 
-    if (tipoDenuncia) {
+    if (TipoDenuncia) {
+        string Archivo;
         cout << "-- Denuncia Escrita --\n";
-
-        fflush(stdin);
-        string archivo;
         cout << "Ingrese el archivo\n";
-        cin >> archivo;
+        cin >> Archivo;
 
-        NuevaDenuncia = new DenunciaEscrita(documentacion, delito, archivo);
-        NuevaDenuncia->AsignarPreambulo(Fecha{}, direccionDelito, oficialACargo, demandante, demandado);
-        Denuncias.emplace_back(NuevaDenuncia);
+        NuevaDenuncia = new DenunciaEscrita(Documentacion, delito, Archivo);
+        NuevaDenuncia->AsignarPreambulo(Fecha{}, DireccionDelito, oficialACargo, demandante, demandado);
     } else {
+        string Descripcion;
         cout << "-- Denuncia Oral --\n";
-
-        fflush(stdin);
-        string descripcion;
         cout << "Ingrese la descripcion\n";
-        cin >> descripcion;
+        cin >> Descripcion;
 
-        NuevaDenuncia = new DenunciaOral(documentacion, delito, descripcion);
-        NuevaDenuncia->AsignarPreambulo(Fecha{}, direccionDelito, oficialACargo, demandante, demandado);
-        Denuncias.emplace_back(NuevaDenuncia);
+        NuevaDenuncia = new DenunciaOral(Documentacion, delito, Descripcion);
+        NuevaDenuncia->AsignarPreambulo(Fecha{}, DireccionDelito, oficialACargo, demandante, demandado);
     }
 
-        NuevaDenuncia->MostrarInformacion();
+    NuevaDenuncia->MostrarInformacion();
 
-//    Denuncias.emplace_back(NuevaDenuncia); // Se agrega denuncia al vector de Denuncias del Sistema
-//    Comisarias[comisaria]->AgregarDenuncia(NuevaDenuncia); // Se agrega denuncia al vector de Denuncias de la Comisaria
+    Denuncias.emplace_back(NuevaDenuncia); // Se agrega denuncia al vector de Denuncias del Sistema
+    Comisarias[Comisaria]->AgregarDenuncia(NuevaDenuncia); // Se agrega denuncia al vector de Denuncias de la Comisaria
 }

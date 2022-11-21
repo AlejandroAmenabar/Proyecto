@@ -11,6 +11,6 @@ void DenunciaEscrita::Derivar(const Fecha &FechaD) {
     Dependencia->AgregarDenuncia((Denuncia *) this);
 
     Registro *NuevoRegistro = new Registro(FechaD, Dependencia->GetNombre());
-    GetRegistros().emplace_back(NuevoRegistro);
+    AgregarRegistro(NuevoRegistro);
 }
 

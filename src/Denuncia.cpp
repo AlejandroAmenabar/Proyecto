@@ -14,7 +14,7 @@ Denuncia::Denuncia(const string &documentacion, Delito *delito) : Documentacion(
 Denuncia::~Denuncia() {
     delete PreambuloD;
 
-    for (auto Registro: Registros) {
+    for (const auto& Registro: Registros) {
         delete Registro;
     }
 }
@@ -26,12 +26,11 @@ void Denuncia::MostrarInformacion() const {
     PreambuloD->MostrarInformacion();
 }
 
-void Denuncia::AgregarInvestigacion(const string &investigacion) {
-    Registros.back()->SetInvestigacion(investigacion);
-}
+//void Denuncia::AgregarInvestigacion(const string &investigacion) {
+//    Registros.back()->AsignarInvestigacion(investigacion);
+//}
 
-void Denuncia::AsignarPreambulo(const Fecha &fecha, const string &direccion, Oficial *oficial, Persona *demandante,
-                                Persona *demandado) {
+void Denuncia::AsignarPreambulo(const Fecha &fecha, const string &direccion, Oficial *oficial, Persona *demandante, Persona *demandado) {
     PreambuloD = new class Preambulo(fecha, direccion, demandante, demandado, oficial);
 }
 
@@ -51,4 +50,8 @@ Persona *Denuncia::GetDemandante() const {
 Persona *Denuncia::GetDemandado() const {
     // TODO
     return nullptr;
+}
+
+void Denuncia::AgregarRegistro(Registro* registro) {
+    Registros.emplace_back(registro);
 }

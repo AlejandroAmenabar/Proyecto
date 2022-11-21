@@ -45,8 +45,10 @@ public:
                           Persona *demandado);
 
     virtual void Derivar(const Fecha &fecha) = 0;
+    
+//    void AgregarInvestigacion(const string &investigacion);
 
-    void AgregarInvestigacion(const string &investigacion);
+    void AgregarRegistro(Registro* registro);
 
     Persona *BuscarPersona(int dni) const;
 
@@ -60,7 +62,7 @@ public:
 
     inline const Preambulo *GetPreambulo() const { return PreambuloD; }
 
-    inline vector<Registro *> GetRegistros() { return Registros; }
+    inline const vector<Registro *>& GetRegistros() const { return Registros; }
 };
 
 #endif //PROYECTO_DENUNCIA_H
