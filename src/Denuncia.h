@@ -44,7 +44,7 @@ public:
     void AsignarPreambulo(const Fecha &fecha, const string &direccion, Oficial *oficial, Persona *demandante,
                           Persona *demandado);
 
-    virtual void Derivar(const Fecha &fecha) = 0;
+    virtual void Derivar(const string& investigacion, const Fecha &fecha) = 0;
     
 //    void AgregarInvestigacion(const string &investigacion);
 

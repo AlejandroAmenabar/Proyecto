@@ -6,9 +6,9 @@ using namespace std;
 
 Oficial::~Oficial(){}
 
-void Oficial::MostrarInfo()
+void Oficial::MostrarInformacion()
 {
-	Persona::MostrarInfo();
+    Persona::MostrarInformacion();
 	cout<<"Cargo: "<< this->cargo[this->Car]<<endl;
 }
 

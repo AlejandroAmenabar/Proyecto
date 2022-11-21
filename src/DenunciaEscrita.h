@@ -17,7 +17,7 @@ public:
 
     ~DenunciaEscrita() override = default;
 
-    void Derivar(const Fecha &FechaD) override;
+    void Derivar(const string& investigacion, const Fecha &FechaD) override;
 };
 
 

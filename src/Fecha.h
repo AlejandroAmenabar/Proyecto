@@ -7,61 +7,66 @@ using namespace std;
 
 class Fecha {
 
-    short hora;
+    short Hora;
 
-    short minuto;
+    short Minuto;
 
-	short dia;
+    short Dia;
 
-	short mes;
+    short Mes;
 
-	short anio;
+    short Anio;
 
-	bool esDiaValido() const;
+    bool EsDiaValido() const;
 
-	bool esMesValido() const;
+    bool EsMesValido() const;
 
-	bool esAnioValido() const;
+    bool EsAnioValido() const;
 
-	short diasEnMes(const short mes) const;
+    short DiasEnMes(short mes) const;
 
 public:
 
-	//Constructores
-	Fecha();
+    Fecha();
 
-	Fecha(const short d, const short m, const short a);
+    Fecha(short int dia, short int mes, short int anio) : Hora(0), Minuto(0), Dia(dia), Mes(mes), Anio(anio) {}
 
-    Fecha(const short d, const short m, const short a, const short hora, const short minuto);
+    Fecha(const short dia, const short mes, const short anio, const short hora, const short minuto) : Hora(hora),
+                                                                                                      Minuto(minuto),
+                                                                                                      Dia(dia),
+                                                                                                      Mes(mes),
+                                                                                                      Anio(anio) {}
 
-	Fecha(const Fecha &f);
+    Fecha(const Fecha &fecha) = default;
 
-	//Setters
-	void setFechaActual(void);
+    void SetFechaActual();
 
-	void setFecha(const short d, const short m, const short a);
+    void SetFecha(short dia, short mes, short anio);
 
-    void setFecha(const short d, const short m, const short a, const short hora, const short minuto);
+    void SetFecha(short dia, short mes, short anio, short hora, short minuto);
 
-	//Getters
-	inline short getDia() const { return dia; }
+    inline short GetHora() const { return Hora; }
 
-	inline short getMes() const { return mes; }
+    inline short GetMinuto() const { return Minuto; }
 
-	inline short getAnio() const { return anio; }
+    inline short GetDia() const { return Dia; }
 
-	bool esAnioBisiesto(void) const;
+    inline short GetMes() const { return Mes; }
 
-	long int cantidadDiasDelAnio();
+    inline short GetAnio() const { return Anio; }
 
-	//Sobrecarga de operadores
-	friend bool operator>=(Fecha fecha1, Fecha fecha2);
+    bool EsAnioBisiesto() const;
 
-	friend long int operator-(Fecha &fecha1, Fecha &fecha2);//Retorna la diferencia de d�as entre 2 fechas
+    long int CantidadDiasDelAnio() const;
 
-    friend bool operator==(Fecha& fecha1, Fecha& fecha2);
+    friend bool operator>=(const Fecha &fecha1, const Fecha &fecha2);
+
+    friend long int operator-(const Fecha &fecha1, const Fecha &fecha2);//Retorna la diferencia de d�as entre 2 fechas
+
+    friend bool operator==(const Fecha &fecha1, const Fecha &fecha2);
+
+    friend ostream &operator<<(ostream &salida, const Fecha &f);
 };
 
-ostream& operator<<(ostream &salida,const Fecha &f);
 
 #endif /* FECHA_H_ */

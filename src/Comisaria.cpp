@@ -24,7 +24,7 @@ void Comisaria::AgregarOficial(Oficial *oficial) {
 
 void Comisaria::MostrarDenuncias(Fecha fecha) const {
     for (const auto &Denuncia: Denuncias) {
-        if (Denuncia->GetFecha() - fecha == 0) {
+        if (Denuncia->GetFecha() == fecha) {
             Denuncia->MostrarInformacion();
         }
     }
@@ -35,14 +35,10 @@ void Comisaria::AgregarDenuncia(Denuncia *denuncia) {
 }
 
 void Comisaria::DerivarDenuncia() {
-//    string Declaracion;
-//    cout << "Ingrese declaracion inicial de la denuncia: \n"; // Se guarda en la variable Investigación de Registro
-//    cin >> Declaracion;
+    string InvestigacionComisaria;
+    cout << "Ingrese declaracion inicial de la denuncia: \n"; // Se guarda en la variable Investigación de Registro
+    cin >> InvestigacionComisaria;
 
-//    string PrimeraDependencia = Denuncias.back()->GetDelito()->ObtenerPrimeraDependencia()->GetNombre();
-//    Registro* RegistroInicial = new Registro(Fecha{}, PrimeraDependencia);
-//    Denuncias.back()->AgregarRegistro(RegistroInicial);
-//    Denuncias.back()->AgregarInvestigacion(Declaracion);
-    Denuncias.back()->Derivar(Fecha{});
+    Denuncias.back()->Derivar(InvestigacionComisaria, Fecha{});
     Denuncias.pop_back();
 }

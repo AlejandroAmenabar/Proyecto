@@ -19,14 +19,14 @@ Sistema::~Sistema() {
     }
 }
 
-void Sistema::AgregarComisaria(const string &direccion, vector<Oficial *> oficiales) {
+void Sistema::AgregarComisaria(const string &direccion, const vector<Oficial *>& oficiales) {
     Comisaria *NuevaComisaria = new Comisaria(direccion, oficiales);
     Comisarias.emplace_back(NuevaComisaria);
 }
 
 void Sistema::MostrarDenuncias(Fecha &fecha) const {
     for (const auto &Denuncia: Denuncias) {
-        if (Denuncia->GetFecha() - fecha == 0) {
+        if (Denuncia->GetFecha() == fecha) {
             Denuncia->MostrarInformacion();
         }
     }

@@ -30,7 +30,7 @@ public:
 
     inline const string &GetInvestigacion() const { return Investigacion; }
 
-    inline const string &GetDepedenciaSig() const { return DependenciaSiguiente; }
+    inline const string &GetDepedenciaSiguiente() const { return DependenciaSiguiente; }
 
 };
 

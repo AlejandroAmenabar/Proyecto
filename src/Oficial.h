@@ -20,7 +20,7 @@ private:
 public:
 	Oficial(int dni,string nom,Fecha fec,string direc,char sex,Cargo C): Persona(dni,nom,fec,direc,sex),Car(C){}
 	virtual ~Oficial();
-	void MostrarInfo();
+	void MostrarInformacion();
 };
 
 

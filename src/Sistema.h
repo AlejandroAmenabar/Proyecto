@@ -6,9 +6,7 @@
 #include "Fecha.h"
 
 class Persona;
-
 class Comisaria;
-
 class Denuncia;
 class Delito;
 class Oficial;
@@ -31,7 +29,7 @@ public:
 
     virtual ~Sistema();
 
-    void AgregarComisaria(const string &direccion, vector<Oficial *> oficiales);
+    void AgregarComisaria(const string &direccion, const vector<Oficial *>& oficiales);
 
     void RealizarDenuncia(Delito* delito, Persona *demandado, Persona *demandante, Oficial *oficialACargo);
 

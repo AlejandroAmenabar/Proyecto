@@ -3,22 +3,30 @@
 
 #include <iostream>
 #include "Fecha.h"
+
 using namespace std;
 
 class Persona {
-	private:
-		int Dni;
-		string Nombre;
-		Fecha FecNacimiento;
-		string Direccion;
-		char Sexo;
-	public:
-		Persona(int dni,string nom,Fecha fec,string direc,char sex):Dni(dni),Nombre(nom),FecNacimiento(fec),Direccion(direc),Sexo(sex) {}
-		virtual ~Persona();
-		virtual void MostrarInfo();
 
+    int Dni;
+
+    string Nombre;
+
+    Fecha FecNacimiento;
+
+    string Direccion;
+
+    char Sexo;
+
+public:
+
+    Persona(int dni, const string &nombre, const Fecha &fecNacimiento, const string &direccion, char sexo)
+            : Dni(dni), Nombre(nombre), FecNacimiento(fecNacimiento), Direccion(direccion), Sexo(sexo) {}
+
+    virtual ~Persona() = default;
+
+    virtual void MostrarInformacion() const;
 };
-
 
 
 #endif /* PERSONA_H_ */

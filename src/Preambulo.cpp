@@ -8,12 +8,12 @@ void Preambulo::MostrarInformacion() const {
     cout << "Lugar: " << Direccion << '\n';
 
     cout << "-- Demandante --\n";
-    Demandante->MostrarInfo();
+    Demandante->MostrarInformacion();
 
     cout << "-- Demandado --\n";
-    Demandado->MostrarInfo();
+    Demandado->MostrarInformacion();
 
     cout << "-- Oficial --\n";
-    OficialACargo->MostrarInfo();
+    OficialACargo->MostrarInformacion();
 }
 

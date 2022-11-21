@@ -5,36 +5,21 @@
 #include "Registro.h"
 #include "DenunciaOral.h"
 
-void DenunciaOral::Derivar(const Fecha &FechaD) {
+void DenunciaOral::Derivar(const string &investigacion, const Fecha &FechaD) {
     Registro *NuevoRegistro = nullptr;
+    Dependencia *DependenciaSiguiente = nullptr;
 
     if (GetRegistros().empty()) {
-        string InvestigacionComisaria;
-        cout << "Ingrese declaracion inicial de la denuncia: \n"; // Se guarda en la variable Investigación de Registro
-        cin >> InvestigacionComisaria;
-
         string PrimeraDependencia = GetDelito()->ObtenerPrimeraDependencia()->GetNombre();
         NuevoRegistro = new Registro(Fecha{}, PrimeraDependencia);
-        NuevoRegistro->AsignarInvestigacion(InvestigacionComisaria);
-
-        Dependencia *DependenciaInicial = GetDelito()->ObtenerPrimeraDependencia();
-        DependenciaInicial->AgregarDenuncia(this);
+        DependenciaSiguiente = GetDelito()->ObtenerPrimeraDependencia();
     } else {
-        string InvestigacionDependencia;
-        cout << "Ingrese la investigacion de la dependencia: \n";
-        cin >> InvestigacionDependencia;
-
-        // Obtiene el nombre de la dependencia actual desde el último Registro
-        string DependenciaActual = GetRegistros().back()->GetDepedenciaSig();
-
-        // Obtiene el objeto Dependencia siguiente del arreglo en Delito
-        Dependencia *DependenciaSiguiente = GetDelito()->ObtenerSiguienteDependencia(DependenciaActual);
-
-        // Crea un nuevo registro con la siguiente Dependencia
+        string DependenciaActual = GetRegistros().back()->GetDepedenciaSiguiente();
+        DependenciaSiguiente = GetDelito()->ObtenerSiguienteDependencia(DependenciaActual);
         NuevoRegistro = new Registro(FechaD, DependenciaSiguiente->GetNombre());
-        NuevoRegistro->AsignarInvestigacion(InvestigacionDependencia);
-        DependenciaSiguiente->AgregarDenuncia(this);
     }
 
+    NuevoRegistro->AsignarInvestigacion(investigacion);
+    DependenciaSiguiente->AgregarDenuncia(this);
     AgregarRegistro(NuevoRegistro);
 }

@@ -1,9 +1,7 @@
-#include "Persona.h"
 #include <iostream>
+#include "Persona.h"
 
-Persona::~Persona() {}
-
-void Persona::MostrarInfo() {
+void Persona::MostrarInformacion() const {
     cout << "Dni: " << this->Dni << endl;
     cout << "Categoria Delito: " << this->Nombre << endl;
     cout << "Nacimiento: " << this->FecNacimiento << endl;
