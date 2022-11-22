@@ -38,7 +38,6 @@ public:
 
     inline Persona* GetDemandado() const { return Demandado; }
 
-//    inline Oficial* GetOficialACargo() const { return OficialACargo; }
 };
 
 #endif /* PREAMBULO_H_ */

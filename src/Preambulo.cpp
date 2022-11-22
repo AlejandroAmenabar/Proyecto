@@ -1,5 +1,4 @@
 #include "Preambulo.h"
-#include "Persona.h"
 #include "Oficial.h"
 
 void Preambulo::MostrarInformacion() const {
