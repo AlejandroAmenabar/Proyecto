@@ -3,7 +3,6 @@
 
 #include <string>
 #include <vector>
-#include "IDatos.h"
 
 class Fecha;
 
@@ -19,7 +18,7 @@ class Registro;
 
 using namespace std;
 
-class Denuncia : public IDatos {
+class Denuncia {
 
     static int Indice;
 
@@ -39,7 +38,7 @@ public:
 
     virtual ~Denuncia();
 
-    virtual void MostrarInformacion() const override;
+    virtual void MostrarInformacion() const;
 
     void AsignarPreambulo(const Fecha &fecha, const string &direccion, Oficial *oficial, Persona *demandante,
                           Persona *demandado);

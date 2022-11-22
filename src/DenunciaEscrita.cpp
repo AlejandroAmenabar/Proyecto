@@ -14,3 +14,8 @@ void DenunciaEscrita::Derivar(const string& investigacion, const Fecha &FechaD) 
     AgregarRegistro(NuevoRegistro);
 }
 
+void DenunciaEscrita::MostrarInformacion() const {
+    Denuncia::MostrarInformacion();
+    cout << "Archivo: " << Archivo << '\n';
+}
+

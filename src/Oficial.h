@@ -1,29 +1,26 @@
-enum  Cargo {
-//enum class Cargo : unsigned int {
-    Cadete,
-    General,
-	Administrativo,
-	Comisario,
-	Tecnico
-};
-
 #ifndef OFICIAL_H_
 #define OFICIAL_H_
-#include "Persona.h"
+
 #include <iostream>
+#include "Cargos.h"
+#include "Persona.h"
+
 using namespace std;
 
 class Oficial : public Persona {
-private:
-	string cargo[5] = {"Cadete","General","Administrativo","Comisario","Tecnico"};
-	Cargo Car;
+
+    Cargos::Cargo CargoOficial;
+
 public:
-	Oficial(int dni,string nom,Fecha fec,string direc,char sex,Cargo C): Persona(dni,nom,fec,direc,sex),Car(C){}
-	virtual ~Oficial();
-	void MostrarInformacion();
+
+    Oficial(int dni, const string &nombre, const Fecha &fecNacimiento, const string &direccion, char sexo,
+            const Cargos::Cargo& cargoOficial) : Persona(dni, nombre, fecNacimiento, direccion, sexo),
+                                          CargoOficial(cargoOficial) {}
+
+    virtual ~Oficial() override = default;
+
+    virtual void MostrarInformacion() const override;
 };
-
-
 
 
 #endif /* OFICIAL_H_ */

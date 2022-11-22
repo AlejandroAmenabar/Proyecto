@@ -13,31 +13,19 @@ namespace Cargos {
         Tecnico
     };
 
-    static std::string ToString (const Cargo& cargo) {
-        std::string Salida;
-
+    static const char* ToString (const Cargo& cargo) {
         switch (cargo) {
-            case Cargo::Cadete:
-                Salida = "Cadete";
-                break;
-            case Cargo::General:
-                Salida = "General";
-                break;
-            case Cargo::Administrativo:
-                Salida = "Administrativo";
-                break;
-            case Cargo::Comisario:
-                Salida = "Comisario";
-                break;
-            case Cargo::Tecnico:
-                Salida = "Tecnico";
-                break;
-            default:
-                Salida = "Desconocido";
-                break;
+            case Cargo::Cadete: return "Cadete";
+            case Cargo::General: return "General";
+            case Cargo::Administrativo: return "Administrativo";
+            case Cargo::Comisario: return "Comisario";
+            case Cargo::Tecnico: return "Tecnico";
+            default: return "Desconocido";
         }
+    }
 
-        return Salida;
+    static void MostrarCargos(){
+        cout << "Cadete (0) - General(1) - Administrativo(2) - Comisario(3) - Tecnico(4)\n";
     }
 }
 

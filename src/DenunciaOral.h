@@ -20,6 +20,8 @@ public:
     ~DenunciaOral() override = default;
 
     void Derivar(const string& investigacion, const Fecha &FechaD) override;
+
+    virtual void MostrarInformacion() const override;
 };
 
 

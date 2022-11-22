@@ -5,6 +5,11 @@
 #include "Registro.h"
 #include "DenunciaOral.h"
 
+void DenunciaOral::MostrarInformacion() const {
+    Denuncia::MostrarInformacion();
+    cout << "Descripcion: " << Descripcion << '\n';
+}
+
 void DenunciaOral::Derivar(const string &investigacion, const Fecha &FechaD) {
     Registro *NuevoRegistro = nullptr;
     Dependencia *DependenciaSiguiente = nullptr;

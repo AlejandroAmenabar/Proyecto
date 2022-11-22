@@ -1,15 +1,9 @@
 #include <iostream>
 #include "Oficial.h"
-#include "Denuncia.h"
 
 using namespace std;
 
-Oficial::~Oficial(){}
-
-void Oficial::MostrarInformacion()
-{
+void Oficial::MostrarInformacion() const {
     Persona::MostrarInformacion();
-	cout<<"Cargo: "<< this->cargo[this->Car]<<endl;
+    cout << "Cargo: " << Cargos::ToString(CargoOficial) << '\n';
 }
-
-
