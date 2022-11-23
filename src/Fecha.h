@@ -59,13 +59,15 @@ public:
 
     long int CantidadDiasDelAnio() const;
 
-    friend bool operator>=(const Fecha &fecha1, const Fecha &fecha2);
+    friend bool operator>=(const Fecha &lhs, const Fecha &rhs);
 
-    friend long int operator-(const Fecha &fecha1, const Fecha &fecha2);//Retorna la diferencia de d�as entre 2 fechas
+    friend long int operator-(const Fecha &lhs, const Fecha &rhs);
 
-    friend bool operator==(const Fecha &fecha1, const Fecha &fecha2);
+    friend bool operator==(const Fecha &lhs, const Fecha &rhs);
 
-    friend ostream &operator<<(ostream &salida, const Fecha &f);
+    friend ostream &operator<<(ostream &os, const Fecha &fecha);
+
+    friend istream& operator>>(istream& is, Fecha& fecha);
 };
 
 

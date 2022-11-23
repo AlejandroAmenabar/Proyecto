@@ -153,29 +153,34 @@ long int cantidadDiasAniosCompletos(int anioBase, int anio) {
     return dias;
 }
 
-bool operator>=(const Fecha &fecha1, const Fecha &fecha2) {
-    return ((fecha1.Anio > fecha2.Anio) || (fecha1.Anio == fecha2.Anio && (fecha1.Mes > fecha2.Mes ||
-                                                                           (fecha1.Mes == fecha2.Mes &&
-                                                                            fecha1.Dia >= fecha2.Dia))));
+bool operator>=(const Fecha &lhs, const Fecha &rhs) {
+    return ((lhs.Anio > rhs.Anio) || (lhs.Anio == rhs.Anio && (lhs.Mes > rhs.Mes ||
+                                                               (lhs.Mes == rhs.Mes &&
+                                                                lhs.Dia >= rhs.Dia))));
 }
 
-long int operator-(const Fecha &fecha1, const Fecha &fecha2) {
+long int operator-(const Fecha &lhs, const Fecha &rhs) {
     long int dif = 0;
-    if (fecha1 >= fecha2) {
-        long int diasAnios = cantidadDiasAniosCompletos(fecha2.GetAnio(), fecha1.GetAnio());
-        long int dias2 = fecha2.CantidadDiasDelAnio();
-        long int dias1 = fecha1.CantidadDiasDelAnio() + diasAnios;
+    if (lhs >= rhs) {
+        long int diasAnios = cantidadDiasAniosCompletos(rhs.GetAnio(), lhs.GetAnio());
+        long int dias2 = rhs.CantidadDiasDelAnio();
+        long int dias1 = lhs.CantidadDiasDelAnio() + diasAnios;
         dif = dias1 - dias2;
     }
     return dif;
 }
 
-bool operator==(const Fecha &fecha1, const Fecha &fecha2) {
-    return fecha1.Dia == fecha2.Dia && fecha1.Mes == fecha2.Mes && fecha1.Anio == fecha2.Anio;
+bool operator==(const Fecha &lhs, const Fecha &rhs) {
+    return lhs.Dia == rhs.Dia && lhs.Mes == rhs.Mes && lhs.Anio == rhs.Anio;
 }
 
-ostream &operator<<(ostream &salida, const Fecha &f) { salida.fill('0');
-    salida << setw(2) << f.GetDia() << "/" << setw(2) << f.GetMes() << "/" << setw(4)
-           << f.GetAnio();
-    return salida;
+ostream &operator<<(ostream &os, const Fecha &fecha) { os.fill('0');
+    os << setw(2) << fecha.GetDia() << "/" << setw(2) << fecha.GetMes() << "/" << setw(4)
+       << fecha.GetAnio();
+    return os;
+}
+
+istream &operator>>(istream &is, Fecha &fecha) {
+    is >> fecha.Dia >> fecha.Mes >> fecha.Anio;
+    return is;
 }

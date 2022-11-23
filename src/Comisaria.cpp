@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "Comisaria.h"
 #include "Oficial.h"
 #include "Denuncia.h"
@@ -7,11 +8,6 @@
 
 int Comisaria::Indice = 0;
 
-Comisaria::Comisaria(const string &direccion, const vector<Oficial *> &oficiales) : Direccion(direccion),
-                                                                                    Oficiales(oficiales) {
-    Codigo = Indice++;
-}
-
 void Comisaria::MostrarInformacion() const {
     cout << "-- Comisaria --\n";
     cout << "Codigo: " << Codigo << '\n';
@@ -19,7 +15,10 @@ void Comisaria::MostrarInformacion() const {
 }
 
 void Comisaria::AgregarOficial(Oficial *oficial) {
-    Oficiales.emplace_back(oficial);
+    // Agrego el oficial solo si no se encuentra ya en el vector de oficiales
+    if (std::find(Oficiales.begin(), Oficiales.end(), oficial) != Oficiales.end()) {
+        Oficiales.emplace_back(oficial);
+    }
 }
 
 void Comisaria::MostrarDenuncias(Fecha fecha) const {

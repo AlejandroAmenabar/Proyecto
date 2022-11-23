@@ -6,6 +6,7 @@
 #include "Fecha.h"
 
 class Denuncia;
+
 class Oficial;
 
 using namespace std;
@@ -14,7 +15,7 @@ class Comisaria {
 
     static int Indice;
 
-    int Codigo;
+    int Codigo = Indice++;
 
     string Direccion;
 
@@ -24,7 +25,7 @@ class Comisaria {
 
 public:
 
-    Comisaria(const string &direccion, const vector<Oficial *> &oficiales);
+    explicit Comisaria(const string &direccion) : Direccion(direccion) {}
 
     void DerivarDenuncia();
 

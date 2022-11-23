@@ -19,12 +19,16 @@ Sistema::~Sistema() {
     }
 }
 
-void Sistema::AgregarComisaria(const string &direccion, const vector<Oficial *>& oficiales) {
-    Comisaria *NuevaComisaria = new Comisaria(direccion, oficiales);
+void Sistema::AgregarComisaria(const string &direccion) {
+    Comisaria *NuevaComisaria = new Comisaria(direccion);
     Comisarias.emplace_back(NuevaComisaria);
 }
 
-void Sistema::MostrarDenuncias(Fecha &fecha) const {
+void Sistema::AgregarOficialAComisaria(int codigoComisaria, Oficial * oficial) {
+    Comisarias[codigoComisaria]->AgregarOficial(oficial);
+}
+
+void Sistema::MostrarDenuncias(const Fecha &fecha) const {
     for (const auto &Denuncia: Denuncias) {
         if (Denuncia->GetFecha() == fecha) {
             Denuncia->MostrarInformacion();
@@ -33,7 +37,9 @@ void Sistema::MostrarDenuncias(Fecha &fecha) const {
 }
 
 void Sistema::MostrarComisarias() const {
-
+    for(const auto& Comisaria : Comisarias){
+        Comisaria->MostrarInformacion();
+    }
 }
 
 void Sistema::MostrarPersona(int dni) const {

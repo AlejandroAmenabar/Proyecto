@@ -29,21 +29,17 @@ public:
 
     virtual ~Sistema();
 
-    void AgregarComisaria(const string &direccion, const vector<Oficial *>& oficiales);
+    void AgregarComisaria(const string &direccion);
+
+    void AgregarOficialAComisaria(int codigoComisaria, Oficial * oficial);
 
     void RealizarDenuncia(Delito* delito, Persona *demandado, Persona *demandante, Oficial *oficialACargo);
 
-    void MostrarDenuncias(Fecha &fecha) const;
+    void MostrarDenuncias(const Fecha &fecha) const;
 
     void MostrarComisarias() const;
 
     void MostrarPersona(int dni) const;
-
-    inline int GetCodigo() const { return Codigo; }
-
-    inline const string &GetNombre() const { return Nombre; }
-
-    inline const vector<Comisaria *> &GetComisarias() const { return Comisarias; }
 };
 
 #endif //PROYECTO_SISTEMA_H

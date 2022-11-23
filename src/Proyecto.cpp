@@ -8,81 +8,97 @@
 #include "Persona.h"
 #include "Oficial.h"
 
-void RegistrarPersonaEnSistema(Persona*& NuevaPersona);
-void RegistrarOficialEnSistema(Oficial*& NuevoOficial);
+void CrearPersona(Persona *&NuevaPersona);
+
+void CrearOficial(Oficial *&NuevoOficial);
 
 using namespace std;
 
 int main() {
     bool EstaActivo = true;
 
-#pragma region Inicialización de Depencencias para el Programa
-    /*
-     * Creación de Sistema de Tucumán
-     */
-    Sistema Tucuman{234, "Tucumán"};
+#pragma region Inicialización de Depencencias
+
+    vector<Persona *> Personas;
+    vector<Oficial *> Oficiales;
+
     Fecha FechaActual;
 
+    Sistema Tucuman{234, "Tucumán"};
 
-    /*
-     * Creación de Dependencias a las que se derivarán las Denuncias
-     */
     Dependencia Fiscalia{0, "Fiscalia"};
     Dependencia Criminalistica{1, "Criminalistica"};
     Dependencia Fraude{2, "Fraude"};
     Dependencia Drogas{3, "Drogas"};
 
-    /*
-     * Creación de vector deDependencias según los Delitos
-     */
-    vector<Dependencia *> DepedenciasCriminesSexuales{&Criminalistica, &Fraude, &Fiscalia};
+    vector<Dependencia *> DependenciaSexuales{&Criminalistica, &Fraude, &Fiscalia};
+    Delito Sexual{0, Categorias::Categoria::DelitosSexuales, DependenciaSexuales};
 
-    /*
-     * Creación de los Delitos
-     */
-    Delito Sexual{0, Categorias::Categoria::DelitosSexuales, DepedenciasCriminesSexuales};
-
-    /*
-     * Vector de Personas, include Demandados y Demandantes (Por ahora)
-     * Vector de Oficiales
-     */
-    vector<Persona*> Personas;
-    vector<Oficial*> Oficiales;
 
 #pragma endregion
 
+#pragma region Ejecucion del Sistema
+
     while (EstaActivo) {
         cout << "---- Sistema Comisarias de Tucumán ----\n";
-        cout << "0. Registrar Demandante\n";
-        cout << "1. Registrar Demandado\n";
+        cout << "0. Registrar nueva comisara\n";
         cout << "2. Registrar Oficial\n";
+        cout << "1. Registrar Demandado\n";
         cout << "3. Registrar Denuncia\n";
-        cout << "4. Mostrar Denuncias\n";
-        cout << "5. Crear Denuncia\n";
-        cout << "6. Buscar Persona por id\n";
+        cout << "4. Mostrar Denuncias registradas por fecha\n";
+        cout << "4. Mostrar Comisarias\n";
+        cout << "5. Realizar Denuncia\n";
+        cout << "6. Buscar Persona por DNI\n";
         cout << "7. Salir del sistema\n";
 
         int OpcionIngresada;
         cin >> OpcionIngresada;
 
         switch (OpcionIngresada) {
-            /*
-             * Crear demandante y demandado es lo mismo, por ahora todo se guarda en un vector Personas.
-             * Se podría crear un vector Demandantes y Demandados y guardarlos en su vector correspondiente
-             */
-            case 0:
-            case 1:
-                Persona* NuevaPersona;
-                RegistrarPersonaEnSistema(NuevaPersona);
+            case 0: {
+                string Direccion;
+                cout << "Ingrese la dirección de la nueva comisaria\n";
+                cin >> Direccion;
+                Tucuman.AgregarComisaria(Direccion);
+                break;
+            }
+            case 1:{
+
+                break;
+            }
+            case 8: {
+                Persona *NuevaPersona = nullptr;
+                CrearPersona(NuevaPersona);
                 Personas.emplace_back(NuevaPersona);
                 break;
-            case 2:
-                Oficial* NuevoOficial;
-                RegistrarOficialEnSistema(NuevoOficial);
+            }
+            case 2: {
+                int CodigoComisaria;
+                Oficial *NuevoOficial = nullptr;
+                CrearOficial(NuevoOficial);
                 Oficiales.emplace_back(NuevoOficial);
+
+                Tucuman.MostrarComisarias();
+                cout << "Ingrese el codigo de la comisaria donde desea registrar el oficial\n";
+                cin >> CodigoComisaria;
+                Tucuman.AgregarOficialAComisaria(CodigoComisaria, NuevoOficial);
                 break;
+            }
+            case 4: {
+                Fecha Fecha;
+                cout << "Ingrese la fecha de las denuncias que desea buscar\n";
+                cin >> Fecha;
+                Tucuman.MostrarDenuncias(Fecha);
+                break;
+            }
             case 5:
-//                Sistema.Buscarpersona();
+                Tucuman.MostrarComisarias();
+                break;
+            case 6:
+                int Dni;
+                cout << "Ingrese el dni de la persona que desea buscar\n";
+                cin >> Dni;
+                Tucuman.MostrarPersona(Dni);
                 break;
             default:
                 EstaActivo = false;
@@ -90,33 +106,11 @@ int main() {
         }
     }
 
-#pragma region Falta Acomodar
-    Persona Demandado(43321142, "ale", FechaActual, "españa 4455", 'M');
-    Demandado.MostrarInformacion();
-
-    Persona Demandante(2341234, "mariano", FechaActual, "chile 4455", 'M');
-    Demandante.MostrarInformacion();
-
-    Oficial Ector(321423, "Ector Lavo", FechaActual, "rivadavia", 'M', Cargos::Cargo::Cadete);
-    Oficial Wereniski(142, "wereniski", FechaActual, "chile", 'F', Cargos::Cargo::Cadete);
-    Oficial Luchoni(324, "luchoni", FechaActual, "chile234", 'F', Cargos::Cargo::Cadete);
-    Oficial obstrichy(324, "obstrychi", FechaActual, "asdklfjñas", 'F', Cargos::Cargo::Cadete);
-
-    vector<Oficial *> Oficiales1{&Ector, &Wereniski, &Luchoni, &obstrichy};
-    vector<Oficial *> Oficiales2{&Wereniski, &Luchoni, &obstrichy};
-    vector<Oficial *> Oficiales3{&Luchoni, &obstrichy};
-
-    Tucuman.AgregarComisaria("Alberdi", Oficiales1);
-    Tucuman.AgregarComisaria("Las Talitas", Oficiales2);
-    Tucuman.AgregarComisaria("Alderetes", Oficiales3);
-    Tucuman.RealizarDenuncia(&Sexual, &Demandado, &Demandante, &Ector);
-    Tucuman.GetComisarias()[0]->DerivarDenuncia();
-    Criminalistica.DerivarDenuncia();
 #pragma endregion
 
 #pragma region Limpieza Sistema
 
-    for(const auto& Persona : Personas){
+    for (const auto &Persona: Personas) {
         delete Persona;
     }
 
@@ -125,7 +119,7 @@ int main() {
     return 0;
 }
 
-void RegistrarPersonaEnSistema(Persona*& NuevaPersona){
+void CrearPersona(Persona *&NuevaPersona) {
     int Dni;
     string Nombre;
     Fecha FechaNacimiento;
@@ -147,7 +141,7 @@ void RegistrarPersonaEnSistema(Persona*& NuevaPersona){
     NuevaPersona = new Persona(Dni, Nombre, FechaNacimiento, Direccion, Sexo);
 }
 
-void RegistrarOficialEnSistema(Oficial*& NuevoOficial){
+void CrearOficial(Oficial *&NuevoOficial) {
     int Dni;
     string Nombre;
     Fecha FechaNacimiento;
@@ -172,5 +166,5 @@ void RegistrarOficialEnSistema(Oficial*& NuevoOficial){
     cin >> CargoEntero;
     auto CargoEnum = (Cargos::Cargo) CargoEntero;
 
-    NuevoOficial= new Oficial(Dni, Nombre, FechaNacimiento, Direccion, Sexo, CargoEnum);
+    NuevoOficial = new Oficial(Dni, Nombre, FechaNacimiento, Direccion, Sexo, CargoEnum);
 }
