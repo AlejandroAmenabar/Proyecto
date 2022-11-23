@@ -26,6 +26,10 @@ public:
     virtual ~Persona() = default;
 
     virtual void MostrarInformacion() const;
+
+    inline int GetDni() const { return Dni; }
+
+    inline string GetNombre() const { return Nombre; }
 };
 
 

@@ -1,8 +1,10 @@
 #include <iostream>
+#include <algorithm>
 #include "Delito.h"
 #include "Denuncia.h"
 #include "Fecha.h"
 #include "Preambulo.h"
+#include "Persona.h"
 #include "Registro.h"
 
 int Denuncia::Indice = 0;
@@ -14,7 +16,7 @@ Denuncia::Denuncia(const string &documentacion, Delito *delito) : Documentacion(
 Denuncia::~Denuncia() {
     delete PreambuloD;
 
-    for (const auto& Registro: Registros) {
+    for (const auto &Registro: Registros) {
         delete Registro;
     }
 }
@@ -26,15 +28,18 @@ void Denuncia::MostrarInformacion() const {
     PreambuloD->MostrarInformacion();
 }
 
-//void Denuncia::AgregarInvestigacion(const string &investigacion) {
-//    Registros.back()->AsignarInvestigacion(investigacion);
-//}
-
-void Denuncia::AsignarPreambulo(const Fecha &fecha, const string &direccion, Oficial *oficial, Persona *demandante, Persona *demandado) {
+void Denuncia::AsignarPreambulo(const Fecha &fecha, const string &direccion, Oficial *oficial, Persona *demandante,
+                                Persona *demandado) {
     PreambuloD = new class Preambulo(fecha, direccion, demandante, demandado, oficial);
 }
 
 Persona *Denuncia::BuscarPersona(int dni) const {
+    if (GetDemandante()->GetDni() == dni) {
+        return GetDemandante();
+    } else if (GetDemandado()->GetDni() == dni) {
+        return GetDemandado();
+    }
+
     return nullptr;
 }
 
@@ -43,15 +48,13 @@ Fecha &Denuncia::GetFecha() const {
 }
 
 Persona *Denuncia::GetDemandante() const {
-    // TODO
-    return nullptr;
+    return PreambuloD->GetDemandante();
 }
 
 Persona *Denuncia::GetDemandado() const {
-    // TODO
-    return nullptr;
+    return PreambuloD->GetDemandado();
 }
 
-void Denuncia::AgregarRegistro(Registro* registro) {
+void Denuncia::AgregarRegistro(Registro *registro) {
     Registros.emplace_back(registro);
 }

@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "Sistema.h"
 #include "Delito.h"
 #include "Persona.h"
@@ -6,6 +7,7 @@
 #include "Dependencia.h"
 #include "Registro.h"
 #include "Preambulo.h"
+#include "Denuncia.h"
 #include "DenunciaEscrita.h"
 #include "DenunciaOral.h"
 
@@ -24,7 +26,7 @@ void Sistema::AgregarComisaria(const string &direccion) {
     Comisarias.emplace_back(NuevaComisaria);
 }
 
-void Sistema::AgregarOficialAComisaria(int codigoComisaria, Oficial * oficial) {
+void Sistema::AgregarOficialAComisaria(int codigoComisaria, Oficial *oficial) {
     Comisarias[codigoComisaria]->AgregarOficial(oficial);
 }
 
@@ -37,31 +39,23 @@ void Sistema::MostrarDenuncias(const Fecha &fecha) const {
 }
 
 void Sistema::MostrarComisarias() const {
-    for(const auto& Comisaria : Comisarias){
+    for (const auto &Comisaria: Comisarias) {
         Comisaria->MostrarInformacion();
     }
 }
 
 void Sistema::MostrarPersona(int dni) const {
+    const Persona *Temporal = nullptr;
 
+    for (const auto &Denuncia: Denuncias) {
+        if ((Temporal = Denuncia->BuscarPersona(dni)) != nullptr) {
+            Temporal->MostrarInformacion();
+            break;
+        }
+    }
 }
 
 void Sistema::RealizarDenuncia(Delito *delito, Persona *demandado, Persona *demandante, Oficial *oficialACargo) {
-    int Comisaria;
-    cout << "Ingrese la comisaria(0- Alberdi, 1 - Las Talitas, 2 - Alderetes)\n";
-    cin >> Comisaria;
-
-    int TipoDenuncia;
-    cout << "Oral o escrita (0 - oral, 1 - escrita)\n";
-    cin >> TipoDenuncia;
-
-    string Documentacion;
-    cout << "Ingrese la documentacion\n";
-    cin >> Documentacion;
-
-    string DireccionDelito;
-    cout << "Ingrese donde se cometio el delito\n";
-    cin >> DireccionDelito;
 
     Denuncia *NuevaDenuncia = nullptr;
 
@@ -88,3 +82,8 @@ void Sistema::RealizarDenuncia(Delito *delito, Persona *demandado, Persona *dema
     Denuncias.emplace_back(NuevaDenuncia); // Se agrega denuncia al vector de Denuncias del Sistema
     Comisarias[Comisaria]->AgregarDenuncia(NuevaDenuncia); // Se agrega denuncia al vector de Denuncias de la Comisaria
 }
+
+void Sistema::MostrarPersonas() const {
+
+}
+

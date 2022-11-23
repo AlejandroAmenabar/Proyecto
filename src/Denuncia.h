@@ -45,8 +45,6 @@ public:
 
     virtual void Derivar(const string& investigacion, const Fecha &fecha) = 0;
     
-//    void AgregarInvestigacion(const string &investigacion);
-
     void AgregarRegistro(Registro* registro);
 
     Persona *BuscarPersona(int dni) const;
