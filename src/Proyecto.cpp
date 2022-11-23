@@ -1,4 +1,5 @@
 #include <iostream>
+#include "IExposicion.h"
 #include <vector>
 #include "Comisaria.h"
 #include "Delito.h"
@@ -7,23 +8,33 @@
 #include "Persona.h"
 #include "Sistema.h"
 
-InformacionDenuncia RegistrarInformacionDenuncia();
+void RegistrarDenunciaEnSistema(Sistema &sistema, const vector<IExposicion *> &delitos,
+                                const vector<IExposicion *> &personas, const vector<IExposicion *> &oficiales);
+
+void BuscarPersonaPorDniEnSistema(const Sistema &sistema);
+
+void RegistrarOficialEnSistema(Sistema &sistema, Oficial *&NuevoOficial);
+
+InformacionDenuncia CrearInformacionDenuncia();
+
+void MostrarVector(const vector<IExposicion *> &objetos);
 
 void CrearPersona(Persona *&NuevaPersona);
 
 void CrearOficial(Oficial *&NuevoOficial);
 
-void MostrarPersonas(const vector<Persona *> &Personas);
-
 using namespace std;
+
+void RegistrarComisariaEnSistema(Sistema &sistema);
 
 int main() {
     bool EstaActivo = true;
 
 #pragma region Inicialización de Depencencias
 
-    vector<Persona *> Personas;
-    vector<Oficial *> Oficiales;
+    vector<IExposicion *> Personas;
+    vector<IExposicion *> Oficiales;
+    vector<IExposicion *> Delitos;
 
     Fecha FechaActual;
 
@@ -36,43 +47,35 @@ int main() {
 
     vector<Dependencia *> DependenciaSexuales{&Criminalistica, &Fraude, &Fiscalia};
     Delito Sexual{0, Categorias::Categoria::DelitosSexuales, DependenciaSexuales};
+    Delitos.emplace_back(&Sexual);
 
 #pragma endregion
 
 #pragma region Ejecucion del Sistema
 
     while (EstaActivo) {
-        cout << "---- Sistema Comisarias de Tucumán ----\n";
+        cout << "\n---- Sistema Comisarias de Tucuman ----\n";
         cout << "0. Registrar nueva Comisara en el Sistema\n";
         cout << "1. Registrar nuevo Oficial en el Sistema\n";
         cout << "2. Registrar nueva Persona en el Sistema\n";
         cout << "3. Registrar nueva Denuncia en el Sistema\n";
         cout << "4. Mostrar Denuncias registradas por fecha\n";
         cout << "5. Mostrar todas las Comisarias del Sistema\n";
+        cout << "6. Mostrar todas las Personas del Sistema\n";
         cout << "7. Buscar Persona por DNI en el Sistema\n";
-        cout << "7. Salir del Sistema\n";
+        cout << "8. Salir del Sistema\n";
 
-        int OpcionIngresada;
-        cin >> OpcionIngresada;
+        int Opcion;
+        cin >> Opcion;
 
-        switch (OpcionIngresada) {
-            case 0: {
-                string Direccion;
-                cout << "Ingrese la dirección de la nueva comisaria\n";
-                cin >> Direccion;
-                Tucuman.AgregarComisaria(Direccion);
+        switch (Opcion) {
+            case 0:
+                RegistrarComisariaEnSistema(Tucuman);
                 break;
-            }
             case 1: {
-                int CodigoComisaria;
                 Oficial *NuevoOficial = nullptr;
-                CrearOficial(NuevoOficial);
+                RegistrarOficialEnSistema(Tucuman, NuevoOficial);
                 Oficiales.emplace_back(NuevoOficial);
-
-                Tucuman.MostrarComisarias();
-                cout << "Ingrese el codigo de la comisaria donde desea registrar el oficial\n";
-                cin >> CodigoComisaria;
-                Tucuman.AgregarOficialAComisaria(CodigoComisaria, NuevoOficial);
                 break;
             }
             case 2: {
@@ -81,22 +84,9 @@ int main() {
                 Personas.emplace_back(NuevaPersona);
                 break;
             }
-            case 3: {
-                if (Personas.size() < 2) {
-                    cout << "Deben haber por lo menos dos (2) Personas registradas para poder realizar Denuncias\n";
-                } else {
-                    int CodigoDemandado;
-                    int CodigoDemandante;
-                    MostrarPersonas(Personas);
-
-                    cout << "Ingrese el codigo del demandado\n";
-                    cin >> CodigoDemandado;
-
-                    cout << "Ingrese el codigo del demandante\n";
-                    cin >> CodigoDemandado;
-                }
+            case 3:
+                RegistrarDenunciaEnSistema(Tucuman, Delitos, Personas, Oficiales);
                 break;
-            }
             case 4: {
                 Fecha Fecha;
                 cout << "Ingrese la fecha de las denuncias que desea buscar\n";
@@ -108,10 +98,10 @@ int main() {
                 Tucuman.MostrarComisarias();
                 break;
             case 6:
-                int Dni;
-                cout << "Ingrese el dni de la persona que desea buscar\n";
-                cin >> Dni;
-                Tucuman.MostrarPersona(Dni);
+                MostrarVector(Personas);
+                break;
+            case 7:
+                BuscarPersonaPorDniEnSistema(Tucuman);
                 break;
             default:
                 EstaActivo = false;
@@ -123,8 +113,11 @@ int main() {
 
 #pragma region Limpieza Sistema
 
-    for (const auto &Persona: Personas) {
-        delete Persona;
+    for (
+        const auto &Persona
+            : Personas) {
+        delete
+                Persona;
     }
 
 #pragma endregion
@@ -132,9 +125,63 @@ int main() {
     return 0;
 }
 
-void MostrarPersonas(const vector<Persona *> &Personas) {
-    for (const auto &Persona: Personas) {
-        Persona->MostrarInformacion();
+void RegistrarComisariaEnSistema(Sistema &sistema) {
+    string Direccion;
+    cout << "Ingrese la dirección de la nueva comisaria\n";
+    cin >> Direccion;
+    sistema.AgregarComisaria(Direccion);
+}
+
+void BuscarPersonaPorDniEnSistema(const Sistema &sistema) {
+
+    int Dni;
+    cout << "Ingrese el dni de la persona que desea buscar\n";
+    cin >> Dni;
+    sistema.MostrarPersona(Dni);
+}
+
+void RegistrarDenunciaEnSistema(Sistema &sistema, const vector<IExposicion *> &delitos,
+                                const vector<IExposicion *> &personas, const vector<IExposicion *> &oficiales) {
+    if (personas.size() < 2) {
+        cout << "Deben haber por lo menos dos (2) Personas registradas para poder realizar Denuncias\n";
+        return;
+    }
+
+    int IndiceDemandado;
+    int IndiceDemandante;
+    int IndiceOficial;
+    int IndiceDelito;
+
+    MostrarVector(personas);
+
+    cout << "Ingrese el codigo del demandado\n";
+    cin >> IndiceDemandado;
+
+    cout << "Ingrese el codigo del demandante\n";
+    cin >> IndiceDemandante;
+
+    cout << "Ingrese el codigo del oficial a cargo\n";
+    cin >> IndiceOficial;
+
+    cout << "Ingrese el codigo del delito cometido\n";
+    cin >> IndiceDelito;
+
+    MostrarVector(delitos);
+
+    Delito *DelitoSeleccionado = dynamic_cast<Delito *>(delitos[IndiceDelito]);
+    Persona *Demandante = dynamic_cast<Persona *>(personas[IndiceDemandante]);
+    Persona *Demandado = dynamic_cast<Persona *>(personas[IndiceDemandado]);
+    Oficial *OficialACargo = dynamic_cast<Oficial *>(oficiales[IndiceOficial]);
+
+    InformacionDenuncia NuevaInformacion = CrearInformacionDenuncia();
+    sistema.RealizarDenuncia(NuevaInformacion, DelitoSeleccionado, Demandado, Demandante,
+                             OficialACargo);
+}
+
+void MostrarVector(const vector<IExposicion *> &objetos) {
+    for (const auto &Objeto: objetos) {
+        Objeto->MostrarInformacion();
+        cout << '\n';
     }
 }
 
@@ -160,13 +207,21 @@ void CrearPersona(Persona *&NuevaPersona) {
     NuevaPersona = new Persona(Dni, Nombre, FechaNacimiento, Direccion, Sexo);
 }
 
-void CrearOficial(Oficial *&NuevoOficial) {
+void RegistrarOficialEnSistema(Sistema &sistema, Oficial *&NuevoOficial) {
     int Dni;
-    string Nombre;
-    Fecha FechaNacimiento;
-    string Direccion;
-    char Sexo;
     int CargoEntero;
+    int CodigoComisaria;
+    char Sexo;
+    string Nombre;
+    string Direccion;
+    Fecha FechaNacimiento;
+
+    sistema.MostrarComisarias();
+
+    cout << "Ingrese el codigo de la comisaria donde desea registrar el oficial\n";
+    cin >> CodigoComisaria;
+
+    sistema.AgregarOficialAComisaria(CodigoComisaria, NuevoOficial);
 
     cout << "Ingrese el DNI de la persona\n";
     cin >> Dni;
@@ -188,7 +243,7 @@ void CrearOficial(Oficial *&NuevoOficial) {
     NuevoOficial = new Oficial(Dni, Nombre, FechaNacimiento, Direccion, Sexo, CargoEnum);
 }
 
-InformacionDenuncia RegistrarInformacionDenuncia() {
+InformacionDenuncia CrearInformacionDenuncia() {
     int CodigoComisaria;
     cout << "Ingrese la comisaria(0- Alberdi, 1 - Las Talitas, 2 - Alderetes)\n";
     cin >> CodigoComisaria;
@@ -217,5 +272,5 @@ InformacionDenuncia RegistrarInformacionDenuncia() {
         cin >> Adicional;
     }
 
-    return InformacionDenuncia(CodigoComisaria, TipoDenuncia, Documentacion, DireccionDelito, Adicional);
+    return {CodigoComisaria, TipoDenuncia, Documentacion, DireccionDelito, Adicional};
 }

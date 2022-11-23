@@ -4,12 +4,13 @@
 #include <iostream>
 #include <vector>
 #include "Categoria.h"
+#include "IExposicion.h"
 
 class Dependencia;
 
 using namespace std;
 
-class Delito {
+class Delito : public IExposicion {
 
     int Codigo;
 
@@ -22,7 +23,7 @@ public:
     Delito(int codigo, Categorias::Categoria categoriaDelito, const vector<Dependencia *> &dependencias) : Codigo(
             codigo), CategoriaDelito(categoriaDelito), Dependencias(dependencias) {}
 
-    void MostrarInformacion() const;
+    virtual void MostrarInformacion() const override;
 
     Dependencia *ObtenerPrimeraDependencia() const; // Para derivar desde la Comisaría
 

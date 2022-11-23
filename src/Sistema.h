@@ -24,10 +24,11 @@ struct InformacionDenuncia {
     string DireccionDelito;
     string Adicional;
 
-    InformacionDenuncia(int codigoComisaria, int tipoDenuncia, const string &documentacion, const string &direccionDelito,
+    InformacionDenuncia(int codigoComisaria, int tipoDenuncia, const string &documentacion,
+                        const string &direccionDelito,
                         const string &adicional) : CodigoComisaria(codigoComisaria), TipoDenuncia(tipoDenuncia),
-                                                Documentacion(documentacion), DireccionDelito(direccionDelito),
-                                                Adicional(adicional) {}
+                                                   Documentacion(documentacion), DireccionDelito(direccionDelito),
+                                                   Adicional(adicional) {}
 
     inline int GetCodigoComisaria() const { return CodigoComisaria; }
 
@@ -60,7 +61,9 @@ public:
 
     void AgregarOficialAComisaria(int codigoComisaria, Oficial *oficial);
 
-    void RealizarDenuncia(Delito *delito, Persona *demandado, Persona *demandante, Oficial *oficialACargo);
+    void
+    RealizarDenuncia(const InformacionDenuncia &informacion, Delito *delito, Persona *demandado, Persona *demandante,
+                     Oficial *oficialACargo);
 
     void MostrarDenuncias(const Fecha &fecha) const;
 

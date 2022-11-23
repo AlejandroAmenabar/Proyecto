@@ -55,32 +55,28 @@ void Sistema::MostrarPersona(int dni) const {
     }
 }
 
-void Sistema::RealizarDenuncia(Delito *delito, Persona *demandado, Persona *demandante, Oficial *oficialACargo) {
+void Sistema::RealizarDenuncia(const InformacionDenuncia &informacion, Delito *delito, Persona *demandado,
+                               Persona *demandante, Oficial *oficialACargo) {
 
     Denuncia *NuevaDenuncia = nullptr;
 
-    if (TipoDenuncia) {
-        string Archivo;
-        cout << "-- Denuncia Escrita --\n";
-        cout << "Ingrese el archivo\n";
-        cin >> Archivo;
-
-        NuevaDenuncia = new DenunciaEscrita(Documentacion, delito, Archivo);
-        NuevaDenuncia->AsignarPreambulo(Fecha{}, DireccionDelito, oficialACargo, demandante, demandado);
+    if (informacion.GetTipoDenuncia()) {
+        NuevaDenuncia = new DenunciaEscrita(informacion.GetDocumentacion(), delito,
+                                            informacion.GetAdicional());
+        NuevaDenuncia->AsignarPreambulo(Fecha{}, informacion.GetDireccionDelito(), oficialACargo, demandante,
+                                        demandado);
     } else {
-        string Descripcion;
-        cout << "-- Denuncia Oral --\n";
-        cout << "Ingrese la descripcion\n";
-        cin >> Descripcion;
-
-        NuevaDenuncia = new DenunciaOral(Documentacion, delito, Descripcion);
-        NuevaDenuncia->AsignarPreambulo(Fecha{}, DireccionDelito, oficialACargo, demandante, demandado);
+        NuevaDenuncia = new DenunciaOral(informacion.GetDocumentacion(), delito,
+                                         informacion.GetAdicional());
+        NuevaDenuncia->AsignarPreambulo(Fecha{}, informacion.GetDireccionDelito(), oficialACargo, demandante,
+                                        demandado);
     }
 
     NuevaDenuncia->MostrarInformacion();
 
     Denuncias.emplace_back(NuevaDenuncia); // Se agrega denuncia al vector de Denuncias del Sistema
-    Comisarias[Comisaria]->AgregarDenuncia(NuevaDenuncia); // Se agrega denuncia al vector de Denuncias de la Comisaria
+    Comisarias[informacion.GetCodigoComisaria()]->AgregarDenuncia(
+            NuevaDenuncia); // Se agrega denuncia al vector de Denuncias de la Comisaria
 }
 
 void Sistema::MostrarPersonas() const {

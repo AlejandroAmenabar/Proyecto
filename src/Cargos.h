@@ -2,6 +2,7 @@
 #define PROYECTO_CARGOS_H
 
 #include <string>
+#include <iostream>
 
 namespace Cargos {
 
@@ -25,7 +26,7 @@ namespace Cargos {
     }
 
     static void MostrarCargos(){
-        cout << "Cadete (0) - General(1) - Administrativo(2) - Comisario(3) - Tecnico(4)\n";
+        std::cout << "Cadete (0) - General(1) - Administrativo(2) - Comisario(3) - Tecnico(4)\n";
     }
 }
 

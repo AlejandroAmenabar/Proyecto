@@ -2,11 +2,12 @@
 #define PERSONA_H_
 
 #include <iostream>
+#include "IExposicion.h"
 #include "Fecha.h"
 
 using namespace std;
 
-class Persona {
+class Persona : public IExposicion {
 
     int Dni;
 
@@ -25,7 +26,7 @@ public:
 
     virtual ~Persona() = default;
 
-    virtual void MostrarInformacion() const;
+    virtual void MostrarInformacion() const override;
 
     inline int GetDni() const { return Dni; }
 
