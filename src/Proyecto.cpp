@@ -113,11 +113,12 @@ int main() {
 
 #pragma region Limpieza Sistema
 
-    for (
-        const auto &Persona
-            : Personas) {
-        delete
-                Persona;
+    for (const auto &Persona: Personas) {
+        delete Persona;
+    }
+
+    for (const auto &Oficial: Oficiales) {
+        delete Oficial;
     }
 
 #pragma endregion
@@ -127,7 +128,7 @@ int main() {
 
 void RegistrarComisariaEnSistema(Sistema &sistema) {
     string Direccion;
-    cout << "Ingrese la dirección de la nueva comisaria\n";
+    cout << "Ingrese la direccion de la nueva comisaria\n";
     cin >> Direccion;
     sistema.AgregarComisaria(Direccion);
 }
@@ -147,31 +148,43 @@ void RegistrarDenunciaEnSistema(Sistema &sistema, const vector<IExposicion *> &d
         return;
     }
 
-    int IndiceDemandado;
-    int IndiceDemandante;
-    int IndiceOficial;
-    int IndiceDelito;
+    if (oficiales.empty()) {
+        cout << "Debe haber por lo menos un (1) Oficial registrado para poder realizar Denuncias\n";
+        return;
+    }
+
+    if (!sistema.ExistenComisarias()) {
+        cout << "Debe haber por lo menos una (1) Comisaria registrado para poder realizar Denuncias\n";
+        return;
+    }
+
+    int CodigoDemandado;
+    int CodigoDemandante;
+    int CodigoOficial;
+    int CodigoDelito;
 
     MostrarVector(personas);
 
     cout << "Ingrese el codigo del demandado\n";
-    cin >> IndiceDemandado;
+    cin >> CodigoDemandado;
 
     cout << "Ingrese el codigo del demandante\n";
-    cin >> IndiceDemandante;
+    cin >> CodigoDemandante;
+
+    MostrarVector(oficiales);
 
     cout << "Ingrese el codigo del oficial a cargo\n";
-    cin >> IndiceOficial;
-
-    cout << "Ingrese el codigo del delito cometido\n";
-    cin >> IndiceDelito;
+    cin >> CodigoOficial;
 
     MostrarVector(delitos);
 
-    Delito *DelitoSeleccionado = dynamic_cast<Delito *>(delitos[IndiceDelito]);
-    Persona *Demandante = dynamic_cast<Persona *>(personas[IndiceDemandante]);
-    Persona *Demandado = dynamic_cast<Persona *>(personas[IndiceDemandado]);
-    Oficial *OficialACargo = dynamic_cast<Oficial *>(oficiales[IndiceOficial]);
+    cout << "Ingrese el codigo del delito cometido\n";
+    cin >> CodigoDelito;
+
+    Delito *DelitoSeleccionado = dynamic_cast<Delito *>(delitos[CodigoDelito]);
+    Persona *Demandante = dynamic_cast<Persona *>(personas[CodigoDemandante]);
+    Persona *Demandado = dynamic_cast<Persona *>(personas[CodigoDemandado]);
+    Oficial *OficialACargo = dynamic_cast<Oficial *>(oficiales[CodigoOficial]);
 
     InformacionDenuncia NuevaInformacion = CrearInformacionDenuncia();
     sistema.RealizarDenuncia(NuevaInformacion, DelitoSeleccionado, Demandado, Demandante,

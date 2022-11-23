@@ -21,10 +21,6 @@ void Delito::MostrarInformacion() const {
     cout << "-- Delito --\n";
     cout << "Codigo: " << Codigo << '\n';
     cout << "Categoria: " << Categorias::ToString(CategoriaDelito) << '\n';
-
-    for (auto i = 0; i < Dependencias.size(); i++){
-        cout << "Dependencia " << i << ": " << Dependencias[i]->GetNombre() << '\n';
-    }
 }
 
 Dependencia *Delito::ObtenerPrimeraDependencia() const {

@@ -9,6 +9,10 @@ using namespace std;
 
 class Persona : public IExposicion {
 
+    static int Indice;
+
+    int Codigo = Indice++;
+
     int Dni;
 
     string Nombre;
