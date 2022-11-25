@@ -6,15 +6,16 @@
 #include "Persona.h"
 
 using namespace std;
+using namespace Cargos;
 
 class Oficial : public Persona {
 
-    Cargos::Cargo CargoOficial;
+    Cargo CargoOficial;
 
 public:
 
     Oficial(int dni, const string &nombre, const Fecha &fecNacimiento, const string &direccion, char sexo,
-            const Cargos::Cargo& cargoOficial) : Persona(dni, nombre, fecNacimiento, direccion, sexo),
+            const Cargo& cargoOficial) : Persona(dni, nombre, fecNacimiento, direccion, sexo),
                                           CargoOficial(cargoOficial) {}
 
     virtual ~Oficial() override = default;
