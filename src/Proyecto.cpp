@@ -23,8 +23,6 @@ void MostrarVector(const vector<IExposicion *> &objetos);
 
 void CrearPersona(Persona *&NuevaPersona);
 
-void CrearOficial(Oficial *&NuevoOficial);
-
 using namespace std;
 
 void RegistrarComisariaEnSistema(Sistema &sistema);
@@ -113,6 +111,7 @@ int main() {
 
 #pragma endregion
 
+
 #pragma region Limpieza Sistema
 
     for (const auto &Persona: Personas) {
@@ -131,7 +130,7 @@ int main() {
 void RegistrarComisariaEnSistema(Sistema &sistema) {
     string Direccion;
     cout << "Ingrese la direccion de la nueva comisaria\n";
-    cin >> Direccion;
+    getline(cin, Direccion);
     sistema.AgregarComisaria(Direccion);
 }
 
@@ -211,10 +210,10 @@ void CrearPersona(Persona *&NuevaPersona) {
     cin >> Dni;
 
     cout << "Ingres el nombre\n";
-    cin >> Nombre;
+    getline(cin, Nombre);
 
     cout << "Ingrese la direccion\n";
-    cin >> Direccion;
+    getline(cin, Direccion);
 
     cout << "Ingres el sexo (F - Femenino, M - Masculino)\n";
     cin >> Sexo;
@@ -236,16 +235,14 @@ void RegistrarOficialEnSistema(Sistema &sistema, Oficial *&NuevoOficial) {
     cout << "Ingrese el codigo de la comisaria donde desea registrar el oficial\n";
     cin >> CodigoComisaria;
 
-    sistema.AgregarOficialAComisaria(CodigoComisaria, NuevoOficial);
-
     cout << "Ingrese el DNI de la persona\n";
     cin >> Dni;
 
     cout << "Ingres el nombre\n";
-    cin >> Nombre;
+    getline(cin, Nombre);
 
     cout << "Ingrese la direccion\n";
-    cin >> Direccion;
+    getline(cin, Direccion);
 
     cout << "Ingres el sexo (F - Femenino, M - Masculino)\n";
     cin >> Sexo;
@@ -256,6 +253,7 @@ void RegistrarOficialEnSistema(Sistema &sistema, Oficial *&NuevoOficial) {
     auto CargoEnum = (Cargo) CargoEntero;
 
     NuevoOficial = new Oficial(Dni, Nombre, FechaNacimiento, Direccion, Sexo, CargoEnum);
+    sistema.AgregarOficialAComisaria(CodigoComisaria, NuevoOficial);
 }
 
 InformacionDenuncia CrearInformacionDenuncia() {
