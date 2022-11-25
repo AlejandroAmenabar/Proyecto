@@ -8,6 +8,8 @@
 #include "Persona.h"
 #include "Sistema.h"
 
+using namespace Cargos;
+
 void RegistrarDenunciaEnSistema(Sistema &sistema, const vector<IExposicion *> &delitos,
                                 const vector<IExposicion *> &personas, const vector<IExposicion *> &oficiales);
 
@@ -249,9 +251,9 @@ void RegistrarOficialEnSistema(Sistema &sistema, Oficial *&NuevoOficial) {
     cin >> Sexo;
 
     cout << "Ingrese el cargo\n";
-    Cargos::MostrarCargos();
+    MostrarCargos();
     cin >> CargoEntero;
-    auto CargoEnum = (Cargos::Cargo) CargoEntero;
+    auto CargoEnum = (Cargo) CargoEntero;
 
     NuevoOficial = new Oficial(Dni, Nombre, FechaNacimiento, Direccion, Sexo, CargoEnum);
 }
