@@ -10,9 +10,10 @@ void Comisaria::MostrarInformacion() const {
     cout << "-- Comisaria --\n";
     Ente::MostrarInformacion();
     cout << "Direccion: " << Direccion << '\n';
-    for(const auto& Oficial : Oficiales){
-        Oficial->MostrarInformacion();
-    }
+    cout << '\n';
+//    for(const auto& Oficial : Oficiales){
+//        Oficial->MostrarInformacion();
+//    }
 }
 
 void Comisaria::AgregarOficial(Oficial *oficial) {

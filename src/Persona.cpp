@@ -7,8 +7,9 @@ void Persona::MostrarInformacion() const {
     cout << "--- Persona ---\n";
     cout << "Codigo: " << Codigo << '\n';
     cout << "Dni: " << Dni << '\n';
-    cout << "Categoria Delito: " << Nombre << '\n';
+    cout << "Nombre: " << Nombre << '\n';
     cout << "Nacimiento: " << FecNacimiento << '\n';
     cout << "Direccion: " << Direccion << '\n';
     cout << "Sexo: " << Sexo << '\n';
+    cout << '\n';
 }

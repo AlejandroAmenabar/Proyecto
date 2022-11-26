@@ -24,11 +24,11 @@ void RegistrarDenunciaEnSistema(const vector<Delito *> &delitos, const vector<Pe
                                 const vector<Oficial *> &oficiales, const vector<Comisaria *> &comisarias,
                                 vector<Denuncia *> &denuncias);
 
-void MostrarDenuncias(const Fecha &fecha, const vector<Denuncia *> &denuncias);
+void MostrarDenuncias(const vector<Denuncia *> &denuncias);
 
 void MostrarVector(const vector<IExposicion *> &objetos);
 
-void BuscarPersonaPorDniEnSistema(int dni, const vector<Persona *> &personas);
+void BuscarPersonaPorDniEnSistema(const vector<Persona *> &personas);
 
 InformacionDenuncia CrearInformacionDenuncia();
 
@@ -89,13 +89,9 @@ int main() {
             case 3:
                 RegistrarDenunciaEnSistema(Delitos, Personas, Oficiales, Comisarias, Denuncias);
                 break;
-            case 4: {
-                Fecha Fecha;
-                cout << "Ingrese la fecha de las denuncias que desea buscar\n";
-                cin >> Fecha;
-                MostrarDenuncias(Fecha, Denuncias);
+            case 4:
+                MostrarDenuncias(Denuncias);
                 break;
-            }
             case 5: {
                 vector<IExposicion *> IComisarias(Comisarias.begin(), Comisarias.end());
                 MostrarVector(IComisarias);
@@ -112,10 +108,7 @@ int main() {
                 break;
             }
             case 8:
-                int dni;
-                cout << "Ingrese el dni de la Persona buscada\n";
-                cin >> dni;
-                BuscarPersonaPorDniEnSistema(dni, Personas);
+                BuscarPersonaPorDniEnSistema(Personas);
                 break;
             default:
                 EstaActivo = false;
@@ -252,6 +245,7 @@ void RegistrarDenunciaEnSistema(const vector<Delito *> &delitos, const vector<Pe
     int CodigoDemandante;
     int CodigoOficial;
     int CodigoDelito;
+    int CodigoComisaria;
 
     /*
      * Pide al usuario ingresar los códigos del demandado, demandante, oficial y delito
@@ -273,30 +267,41 @@ void RegistrarDenunciaEnSistema(const vector<Delito *> &delitos, const vector<Pe
     cout << "Ingrese el codigo del delito cometido\n";
     cin >> CodigoDelito;
 
+    vector<IExposicion *> IComisarias(comisarias.begin(), comisarias.end());
+    MostrarVector(IComisarias);
+    cout << "Ingrese el codigo de la comisaria\n";
+    cin >> CodigoComisaria;
+
     /*
      * Busca a los objetos de los códigos seleccionados por el usuario en los vectores del sistema
      */
+    Comisaria *ComisariaBuscada = dynamic_cast<Comisaria *>(BuscarPorCodigo(CodigoComisaria, IComisarias));
     Delito *DelitoSeleccionado = dynamic_cast<Delito *>(BuscarPorCodigo(CodigoDelito, IDelitos));
     Persona *Demandante = dynamic_cast<Persona *>(BuscarPorCodigo(CodigoDemandante, IPersonas));
     Persona *Demandado = dynamic_cast<Persona *>(BuscarPorCodigo(CodigoDemandado, IPersonas));
     Oficial *OficialACargo = dynamic_cast<Oficial *>(BuscarPorCodigo(CodigoOficial, IOficiales));
 
-    if(!DelitoSeleccionado){
+    if (!ComisariaBuscada) {
+        cout << "No se encontró una comisaria el codigo introducido\n";
+        return;
+    }
+
+    if (!DelitoSeleccionado) {
         cout << "No se encontró un delito con el codigo introducido\n";
         return;
     }
 
-    if(!Demandante){
+    if (!Demandante) {
         cout << "No se encontró un demandante con el codigo introducido\n";
         return;
     }
 
-    if(!Demandado){
+    if (!Demandado) {
         cout << "No se encontró un demandado con el codigo introducido\n";
         return;
     }
 
-    if(!OficialACargo){
+    if (!OficialACargo) {
         cout << "No se encontró un oficial con el codigo introducido\n";
         return;
     }
@@ -319,12 +324,16 @@ void RegistrarDenunciaEnSistema(const vector<Delito *> &delitos, const vector<Pe
     NuevaDenuncia->MostrarInformacion();
 
     denuncias.emplace_back(NuevaDenuncia);
-    comisarias[Informacion.GetCodigoComisaria()]->AgregarDenuncia(NuevaDenuncia);
+    ComisariaBuscada->AgregarDenuncia(NuevaDenuncia);
 }
 
-void MostrarDenuncias(const Fecha &fecha, const vector<Denuncia *> &denuncias) {
+void MostrarDenuncias(const vector<Denuncia *> &denuncias) {
+    Fecha Fecha;
+    cout << "Ingrese la fecha de las denuncias que desea buscar\n";
+    cin >> Fecha;
     for (const auto &Denuncia: denuncias) {
-        if (Denuncia->GetFecha() == fecha) {
+
+        if (Denuncia->GetFecha() == Fecha) {
             Denuncia->MostrarInformacion();
         }
     }
@@ -337,14 +346,13 @@ void MostrarVector(const vector<IExposicion *> &objetos) {
     }
 }
 
-void BuscarPersonaPorDniEnSistema(int dni, const vector<Persona *> &personas) {
-
+void BuscarPersonaPorDniEnSistema(const vector<Persona *> &personas) {
     int Dni;
     cout << "Ingrese el dni de la persona que desea buscar\n";
     cin >> Dni;
 
     for (const auto &Persona: personas) {
-        if (Persona->GetDni() == dni) {
+        if (Persona->GetDni() == Dni) {
             Persona->MostrarInformacion();
             break;
         }
@@ -352,12 +360,9 @@ void BuscarPersonaPorDniEnSistema(int dni, const vector<Persona *> &personas) {
 }
 
 InformacionDenuncia CrearInformacionDenuncia() {
-    int CodigoComisaria;
-    cout << "Ingrese la comisaria(0- Alberdi, 1 - Las Talitas, 2 - Alderetes)\n";
-    cin >> CodigoComisaria;
 
     int TipoDenuncia;
-    cout << "Oral o escrita (0 - oral, 1 - escrita)\n";
+    cout << "Oral o escrita (0 - Oral, 1 - Escrita)\n";
     cin >> TipoDenuncia;
 
     string Documentacion;
@@ -380,7 +385,7 @@ InformacionDenuncia CrearInformacionDenuncia() {
         cin >> Adicional;
     }
 
-    return {CodigoComisaria, TipoDenuncia, Documentacion, DireccionDelito, Adicional};
+    return {TipoDenuncia, Documentacion, DireccionDelito, Adicional};
 }
 
 IExposicion *BuscarPorCodigo(int codigo, vector<IExposicion *> &vector) {

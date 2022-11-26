@@ -20,19 +20,14 @@ class Registro;
 using namespace std;
 
 struct InformacionDenuncia {
-    int CodigoComisaria;
     int TipoDenuncia;
     string Documentacion;
     string DireccionDelito;
     string Adicional;
 
-    InformacionDenuncia(int codigoComisaria, int tipoDenuncia, const string &documentacion,
-                        const string &direccionDelito,
-                        const string &adicional) : CodigoComisaria(codigoComisaria), TipoDenuncia(tipoDenuncia),
-                                                   Documentacion(documentacion), DireccionDelito(direccionDelito),
-                                                   Adicional(adicional) {}
-
-    inline int GetCodigoComisaria() const { return CodigoComisaria; }
+    InformacionDenuncia(int tipoDenuncia, const string &documentacion, const string &direccionDelito,
+                        const string &adicional) : TipoDenuncia(tipoDenuncia), Documentacion(documentacion),
+                                                   DireccionDelito(direccionDelito), Adicional(adicional) {}
 
     inline int GetTipoDenuncia() const { return TipoDenuncia; }
 
@@ -68,9 +63,9 @@ public:
     void AsignarPreambulo(const Fecha &fecha, const string &direccion, Oficial *oficial, Persona *demandante,
                           Persona *demandado);
 
-    virtual void Derivar(const string& investigacion, const Fecha &fecha) = 0;
-    
-    void AgregarRegistro(Registro* registro);
+    virtual void Derivar(const string &investigacion, const Fecha &fecha) = 0;
+
+    void AgregarRegistro(Registro *registro);
 
     Persona *BuscarPersona(int dni) const;
 
@@ -84,7 +79,7 @@ public:
 
     inline const Preambulo *GetPreambulo() const { return PreambuloD; }
 
-    inline const vector<Registro *>& GetRegistros() const { return Registros; }
+    inline const vector<Registro *> &GetRegistros() const { return Registros; }
 
     virtual inline int GetCodigo() const override { return Codigo; }
 };

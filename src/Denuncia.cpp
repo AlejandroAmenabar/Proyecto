@@ -26,6 +26,7 @@ void Denuncia::MostrarInformacion() const {
     cout << "Documentacion: " << Documentacion << '\n';
     DelitoCometido->MostrarInformacion();
     PreambuloD->MostrarInformacion();
+    cout << '\n';
 }
 
 void Denuncia::AsignarPreambulo(const Fecha &fecha, const string &direccion, Oficial *oficial, Persona *demandante,

@@ -12,7 +12,6 @@ void Preambulo::MostrarInformacion() const {
     cout << "-- Demandado --\n";
     Demandado->MostrarInformacion();
 
-    cout << "-- Oficial --\n";
     OficialACargo->MostrarInformacion();
 }
 
