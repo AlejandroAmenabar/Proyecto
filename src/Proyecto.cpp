@@ -16,7 +16,7 @@ using namespace std;
 
 void RegistrarComisariaEnSistema(vector<Comisaria *> &comisarias);
 
-void RegistrarOficialEnSistema(vector<Comisaria *> comisarias, vector<Oficial *> oficiales);
+void RegistrarOficialEnSistema(vector<Comisaria *> &comisarias, vector<Oficial *> &oficiales);
 
 void RegistrarPersonaEnSistema(vector<Persona *> &personas);
 
@@ -154,7 +154,7 @@ void RegistrarComisariaEnSistema(vector<Comisaria *> &comisarias) {
     comisarias.emplace_back(NuevaComisaria);
 }
 
-void RegistrarOficialEnSistema(vector<Comisaria *> comisarias, vector<Oficial*> oficiales) {
+void RegistrarOficialEnSistema(vector<Comisaria *> &comisarias, vector<Oficial *> &oficiales) {
 
     if (comisarias.empty()) {
         return;
@@ -193,7 +193,7 @@ void RegistrarOficialEnSistema(vector<Comisaria *> comisarias, vector<Oficial*> 
     cin >> CargoEntero;
     auto CargoEnum = (Cargo) CargoEntero;
 
-    Oficial* NuevoOficial = new Oficial(Dni, Nombre, FechaNacimiento, Direccion, Sexo, CargoEnum);
+    Oficial *NuevoOficial = new Oficial(Dni, Nombre, FechaNacimiento, Direccion, Sexo, CargoEnum);
     Comisaria *ComisariaSeleccionada = dynamic_cast<Comisaria *>(BuscarPorCodigo(CodigoComisaria, IComisarias));
     ComisariaSeleccionada->AgregarOficial(NuevoOficial);
     oficiales.emplace_back(NuevoOficial);
