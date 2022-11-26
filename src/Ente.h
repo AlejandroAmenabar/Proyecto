@@ -20,7 +20,9 @@ public:
 
     virtual ~Ente() = default;
 
-    virtual void DerivarDenuncia() = 0;
+    virtual void DerivarDenuncia();
+
+    virtual void MostrarDenuncias() const;
 
     virtual void MostrarInformacion() const override = 0;
 

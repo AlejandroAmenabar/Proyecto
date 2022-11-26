@@ -30,6 +30,10 @@ void MostrarVector(const vector<IExposicion *> &objetos);
 
 void BuscarPersonaPorDniEnSistema(const vector<Persona *> &personas);
 
+void DerivarUltimaDenunciaEnComisaria(const vector<Comisaria*>& comisarias);
+
+void DerivarUltimaDenunciaEnDependencia(const vector<Dependencia*>& dependencias);
+
 InformacionDenuncia CrearInformacionDenuncia();
 
 IExposicion *BuscarPorCodigo(int codigo, vector<IExposicion *> &vector);
@@ -39,20 +43,21 @@ int main() {
 
 #pragma region Inicialización de Dependencias
 
-    vector<Denuncia *> Denuncias;
-    vector<Comisaria *> Comisarias;
-    vector<Persona *> Personas;
-    vector<Oficial *> Oficiales;
-    vector<Delito *> Delitos;
-
-    Fecha FechaActual;
-
     Dependencia Fiscalia{"Fiscalia"};
     Dependencia Criminalistica{"Criminalistica"};
     Dependencia Fraude{"Fraude"};
     Dependencia Drogas{"Drogas"};
 
-    vector<Dependencia *> DependenciaSexuales{&Criminalistica, &Fraude, &Fiscalia};
+    vector<Denuncia *> Denuncias;
+    vector<Comisaria *> Comisarias;
+    vector<Persona *> Personas;
+    vector<Oficial *> Oficiales;
+    vector<Delito *> Delitos;
+    vector<Dependencia*> Dependencias {&Fiscalia, &Criminalistica, &Fraude, &Drogas};
+
+    Fecha FechaActual;
+
+    vector<Dependencia *> DependenciaSexuales{&Criminalistica, &Fiscalia};
     Delito Sexual{0, Categorias::Categoria::DelitosSexuales, DependenciaSexuales};
     Delitos.emplace_back(&Sexual);
 
@@ -71,7 +76,9 @@ int main() {
         cout << "6. Mostrar todas las Personas del Sistema\n";
         cout << "7. Mostrar todas los Oficiales del Sistema\n";
         cout << "8. Buscar Persona por DNI en el Sistema\n";
-        cout << "9. Salir del Sistema\n";
+        cout << "9. Derivar Denuncias en Comisarias\n";
+        cout << "10. Derivar Denuncias en Dependencias\n";
+        cout << "11. Salir del Sistema\n";
 
         int OpcionSeleccionada;
         cin >> OpcionSeleccionada;
@@ -109,6 +116,12 @@ int main() {
             }
             case 8:
                 BuscarPersonaPorDniEnSistema(Personas);
+                break;
+            case 9:
+                DerivarUltimaDenunciaEnComisaria(Comisarias);
+                break;
+            case 10:
+                DerivarUltimaDenunciaEnDependencia(Dependencias);
                 break;
             default:
                 EstaActivo = false;
@@ -170,7 +183,7 @@ void RegistrarOficialEnSistema(vector<Comisaria *> &comisarias, vector<Oficial *
     cout << "Ingrese el DNI de la persona\n";
     cin >> Dni;
 
-    cout << "Ingres el nombre\n";
+    cout << "Ingrese el nombre\n";
     cin.ignore();
     getline(cin, Nombre);
 
@@ -178,7 +191,7 @@ void RegistrarOficialEnSistema(vector<Comisaria *> &comisarias, vector<Oficial *
     cin.ignore();
     getline(cin, Direccion);
 
-    cout << "Ingres el sexo (F - Femenino, M - Masculino)\n";
+    cout << "Ingrese el sexo (F - Femenino, M - Masculino)\n";
     cin >> Sexo;
 
     cout << "Ingrese el cargo\n";
@@ -222,8 +235,7 @@ void RegistrarPersonaEnSistema(vector<Persona *> &personas) {
 
 void RegistrarDenunciaEnSistema(const vector<Delito *> &delitos, const vector<Persona *> &personas,
                                 const vector<Oficial *> &oficiales, const vector<Comisaria *> &comisarias,
-                                vector<Denuncia *> &denuncias) {
-    /*
+                                vector<Denuncia *> &denuncias) { /*
      * Realiza los controles que hayan suficientes elementos para poder crear una nueva denuncia
      */
     if (personas.size() < 2) {
@@ -322,9 +334,8 @@ void RegistrarDenunciaEnSistema(const vector<Delito *> &delitos, const vector<Pe
 
     NuevaDenuncia->AsignarPreambulo(Fecha{}, Informacion.GetDireccionDelito(), OficialACargo, Demandante, Demandado);
     NuevaDenuncia->MostrarInformacion();
-
-    denuncias.emplace_back(NuevaDenuncia);
     ComisariaBuscada->AgregarDenuncia(NuevaDenuncia);
+    denuncias.emplace_back(NuevaDenuncia);
 }
 
 void MostrarDenuncias(const vector<Denuncia *> &denuncias) {
@@ -359,6 +370,43 @@ void BuscarPersonaPorDniEnSistema(const vector<Persona *> &personas) {
     }
 }
 
+void DerivarUltimaDenunciaEnComisaria(const vector<Comisaria*>& comisarias){
+    int CodigoComisaria;
+
+    vector<IExposicion*> IComisarias (comisarias.begin(), comisarias.end());
+    MostrarVector(IComisarias);
+
+    cout << "Ingrese el codigo de la comisaria donde desea derivar la denuncia\n";
+    cin >> CodigoComisaria;
+
+    Comisaria* ComisariaBuscada = dynamic_cast<Comisaria*>(BuscarPorCodigo(CodigoComisaria, IComisarias));
+
+    if(!ComisariaBuscada){
+        cout << "No se encontró una comisaria con el codigo introducido\n";
+        return;
+    }
+
+    ComisariaBuscada->DerivarDenuncia();
+}
+
+void DerivarUltimaDenunciaEnDependencia(const vector<Dependencia*>& dependencias){
+    int CodigoDependencia;
+
+    vector<IExposicion*> IDependencias (dependencias.begin(), dependencias.end());
+    MostrarVector(IDependencias);
+
+    cout << "Ingrese el codigo de la dependnecia donde desea derivar la denuncia\n";
+    cin >> CodigoDependencia;
+
+    Dependencia* DependenciaBuscada = dynamic_cast<Dependencia*>(BuscarPorCodigo(CodigoDependencia, IDependencias));
+
+    if(!DependenciaBuscada){
+        cout << "No se encontró una dependencia con el codigo introducido\n";
+        return;
+    }
+
+    DependenciaBuscada->DerivarDenuncia();
+}
 InformacionDenuncia CrearInformacionDenuncia() {
 
     int TipoDenuncia;

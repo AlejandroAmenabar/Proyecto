@@ -24,11 +24,7 @@ public:
 
     explicit Comisaria(const string &direccion) : Direccion(direccion) {}
 
-    virtual void DerivarDenuncia() override;
-
     virtual void MostrarInformacion() const override;
-
-    void MostrarDenuncias(Fecha fecha) const;
 
     void AgregarOficial(Oficial *oficial);
 

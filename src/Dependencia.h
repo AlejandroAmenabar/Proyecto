@@ -26,8 +26,6 @@ public:
 
     virtual void MostrarInformacion() const override;
 
-    virtual void DerivarDenuncia() override;
-
     inline const string &GetNombre() const { return Nombre; }
 
     inline const Oficial *GetOficial() const { return OficialDeTurno; }

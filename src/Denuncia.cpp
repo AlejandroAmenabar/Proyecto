@@ -26,6 +26,11 @@ void Denuncia::MostrarInformacion() const {
     cout << "Documentacion: " << Documentacion << '\n';
     DelitoCometido->MostrarInformacion();
     PreambuloD->MostrarInformacion();
+
+    for(const auto& Registro : Registros){
+        Registro->MostrarInformacion();
+    }
+
     cout << '\n';
 }
 

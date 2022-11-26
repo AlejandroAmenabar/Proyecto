@@ -12,9 +12,6 @@ class Registro {
 
     string Investigacion;
 
-    // TODO Opcional
-//    string DependenciaActual;
-
     string DependenciaSiguiente;
 
 public:
