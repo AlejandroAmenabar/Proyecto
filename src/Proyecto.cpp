@@ -32,12 +32,12 @@ void BuscarPersonaPorDniEnSistema(int dni, const vector<Persona *> &personas);
 
 InformacionDenuncia CrearInformacionDenuncia();
 
-IExposicion *&BuscarPorCodigo(int codigo, vector<IExposicion *> &vector);
+IExposicion *BuscarPorCodigo(int codigo, vector<IExposicion *> &vector);
 
 int main() {
     bool EstaActivo = true;
 
-#pragma region Inicialización de Depencencias
+#pragma region Inicialización de Dependencias
 
     vector<Denuncia *> Denuncias;
     vector<Comisaria *> Comisarias;
@@ -125,7 +125,7 @@ int main() {
 
 #pragma endregion
 
-#pragma region Limpieza Sistema
+#pragma region Limpieza del Sistema
 
     for (const auto &Persona: Personas) {
         delete Persona;
@@ -193,10 +193,13 @@ void RegistrarOficialEnSistema(vector<Comisaria *> &comisarias, vector<Oficial *
     cin >> CargoEntero;
     auto CargoEnum = (Cargo) CargoEntero;
 
-    Oficial *NuevoOficial = new Oficial(Dni, Nombre, FechaNacimiento, Direccion, Sexo, CargoEnum);
-    Comisaria *ComisariaSeleccionada = dynamic_cast<Comisaria *>(BuscarPorCodigo(CodigoComisaria, IComisarias));
-    ComisariaSeleccionada->AgregarOficial(NuevoOficial);
-    oficiales.emplace_back(NuevoOficial);
+    if (Comisaria *ComisariaSeleccionada = dynamic_cast<Comisaria *>(BuscarPorCodigo(CodigoComisaria, IComisarias))) {
+        Oficial *NuevoOficial = new Oficial(Dni, Nombre, FechaNacimiento, Direccion, Sexo, CargoEnum);
+        ComisariaSeleccionada->AgregarOficial(NuevoOficial);
+        oficiales.emplace_back(NuevoOficial);
+    } else {
+        cout << "No se encontró una comisaria con el codigo introducido\n";
+    }
 }
 
 void RegistrarPersonaEnSistema(vector<Persona *> &personas) {
@@ -277,6 +280,26 @@ void RegistrarDenunciaEnSistema(const vector<Delito *> &delitos, const vector<Pe
     Persona *Demandante = dynamic_cast<Persona *>(BuscarPorCodigo(CodigoDemandante, IPersonas));
     Persona *Demandado = dynamic_cast<Persona *>(BuscarPorCodigo(CodigoDemandado, IPersonas));
     Oficial *OficialACargo = dynamic_cast<Oficial *>(BuscarPorCodigo(CodigoOficial, IOficiales));
+
+    if(!DelitoSeleccionado){
+        cout << "No se encontró un delito con el codigo introducido\n";
+        return;
+    }
+
+    if(!Demandante){
+        cout << "No se encontró un demandante con el codigo introducido\n";
+        return;
+    }
+
+    if(!Demandado){
+        cout << "No se encontró un demandado con el codigo introducido\n";
+        return;
+    }
+
+    if(!OficialACargo){
+        cout << "No se encontró un oficial con el codigo introducido\n";
+        return;
+    }
 
     /*
      * Crea una nueva información para la denuncia
@@ -360,9 +383,13 @@ InformacionDenuncia CrearInformacionDenuncia() {
     return {CodigoComisaria, TipoDenuncia, Documentacion, DireccionDelito, Adicional};
 }
 
-IExposicion *&BuscarPorCodigo(int codigo, vector<IExposicion *> &vector) {
+IExposicion *BuscarPorCodigo(int codigo, vector<IExposicion *> &vector) {
     auto Iterador = find_if(vector.begin(), vector.end(),
                             [&codigo](const IExposicion *objeto) { return objeto->GetCodigo() == codigo; });
 
-    return *Iterador;
+    if (Iterador != end(vector)) {
+        return *Iterador;
+    }
+
+    return nullptr;
 }

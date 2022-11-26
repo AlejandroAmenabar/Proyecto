@@ -4,6 +4,7 @@
 int Persona::Indice = 0;
 
 void Persona::MostrarInformacion() const {
+    cout << "--- Persona ---\n";
     cout << "Codigo: " << Codigo << '\n';
     cout << "Dni: " << Dni << '\n';
     cout << "Categoria Delito: " << Nombre << '\n';
