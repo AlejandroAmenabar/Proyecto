@@ -14,11 +14,11 @@
 using namespace Cargos;
 using namespace std;
 
-void RegistrarComisariaEnSistema(vector<Comisaria*>& comisarias);
+void RegistrarComisariaEnSistema(vector<Comisaria *> &comisarias);
 
-void RegistrarOficialEnSistema(vector<Comisaria *> comisarias, vector<Oficial*> oficiales);
+void RegistrarOficialEnSistema(vector<Comisaria *> comisarias, vector<Oficial *> oficiales);
 
-void RegistrarPersonaEnSistema(vector<Persona*>& personas);
+void RegistrarPersonaEnSistema(vector<Persona *> &personas);
 
 void RegistrarDenunciaEnSistema(const vector<Delito *> &delitos, const vector<Persona *> &personas,
                                 const vector<Oficial *> &oficiales, const vector<Comisaria *> &comisarias,
@@ -27,7 +27,6 @@ void RegistrarDenunciaEnSistema(const vector<Delito *> &delitos, const vector<Pe
 void MostrarDenuncias(const Fecha &fecha, const vector<Denuncia *> &denuncias);
 
 void MostrarVector(const vector<IExposicion *> &objetos);
-
 
 void BuscarPersonaPorDniEnSistema(int dni, const vector<Persona *> &personas);
 
@@ -74,26 +73,22 @@ int main() {
         cout << "8. Buscar Persona por DNI en el Sistema\n";
         cout << "9. Salir del Sistema\n";
 
-        int Opcion;
-        cin >> Opcion;
+        int OpcionSeleccionada;
+        cin >> OpcionSeleccionada;
 
-        switch (Opcion) {
-            case 0: {
+        switch (OpcionSeleccionada) {
+            case 0:
                 RegistrarComisariaEnSistema(Comisarias);
                 break;
-            }
-            case 1: {
+            case 1:
                 RegistrarOficialEnSistema(Comisarias, Oficiales);
                 break;
-            }
-            case 2: {
+            case 2:
                 RegistrarPersonaEnSistema(Personas);
                 break;
-            }
-            case 3: {
+            case 3:
                 RegistrarDenunciaEnSistema(Delitos, Personas, Oficiales, Comisarias, Denuncias);
                 break;
-            }
             case 4: {
                 Fecha Fecha;
                 cout << "Ingrese la fecha de las denuncias que desea buscar\n";
@@ -140,7 +135,7 @@ int main() {
         delete Oficial;
     }
 
-    for(const auto& Denuncia: Denuncias) {
+    for (const auto &Denuncia: Denuncias) {
         delete Denuncia;
     }
 
@@ -149,17 +144,17 @@ int main() {
     return 0;
 }
 
-void RegistrarComisariaEnSistema(vector<Comisaria*>& comisarias) {
+void RegistrarComisariaEnSistema(vector<Comisaria *> &comisarias) {
     string Direccion;
     cout << "Ingrese la direccion de la nueva comisaria\n";
     cin.ignore();
     getline(cin, Direccion, '\n');
 
-    Comisaria* NuevaComisaria = new Comisaria(Direccion);
+    Comisaria *NuevaComisaria = new Comisaria(Direccion);
     comisarias.emplace_back(NuevaComisaria);
 }
 
-void RegistrarOficialEnSistema(vector<Comisaria *> comisarias, Oficial *&NuevoOficial) {
+void RegistrarOficialEnSistema(vector<Comisaria *> comisarias, vector<Oficial*> oficiales) {
 
     if (comisarias.empty()) {
         return;
@@ -198,12 +193,13 @@ void RegistrarOficialEnSistema(vector<Comisaria *> comisarias, Oficial *&NuevoOf
     cin >> CargoEntero;
     auto CargoEnum = (Cargo) CargoEntero;
 
-    NuevoOficial = new Oficial(Dni, Nombre, FechaNacimiento, Direccion, Sexo, CargoEnum);
-    Comisaria* ComisariaSeleccionada = dynamic_cast<Comisaria*>(BuscarPorCodigo(CodigoComisaria, IComisarias));
+    Oficial* NuevoOficial = new Oficial(Dni, Nombre, FechaNacimiento, Direccion, Sexo, CargoEnum);
+    Comisaria *ComisariaSeleccionada = dynamic_cast<Comisaria *>(BuscarPorCodigo(CodigoComisaria, IComisarias));
     ComisariaSeleccionada->AgregarOficial(NuevoOficial);
+    oficiales.emplace_back(NuevoOficial);
 }
 
-void RegistrarPersonaEnSistema(vector<Persona*>& personas) {
+void RegistrarPersonaEnSistema(vector<Persona *> &personas) {
     int Dni;
     string Nombre;
     Fecha FechaNacimiento;
@@ -224,7 +220,7 @@ void RegistrarPersonaEnSistema(vector<Persona*>& personas) {
     cout << "Ingres el sexo (F - Femenino, M - Masculino)\n";
     cin >> Sexo;
 
-    Persona* NuevaPersona = new Persona(Dni, Nombre, FechaNacimiento, Direccion, Sexo);
+    Persona *NuevaPersona = new Persona(Dni, Nombre, FechaNacimiento, Direccion, Sexo);
     personas.emplace_back(NuevaPersona);
 }
 

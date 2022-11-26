@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include "Ente.h"
+#include "Categoria.h"
 
 class Oficial;
 

@@ -6,6 +6,7 @@ void Dependencia::MostrarInformacion() const {
     cout << "-- Dependencia --\n";
     Ente::MostrarInformacion();
     cout << "Nombre: " << Nombre << '\n';
+//    cout << "Categoria: " <<
 }
 
 void Dependencia::DerivarDenuncia() {
