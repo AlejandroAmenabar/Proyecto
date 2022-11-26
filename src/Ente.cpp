@@ -11,8 +11,14 @@ void Ente::MostrarInformacion() const{
 }
 
 void Ente::DerivarDenuncia() {
+    if(Denuncias.empty()){
+        cout << "Debe haber por lo menos una (1) Denuncia registrado para poder derivarla\n";
+        return;
+    }
+
     string InvestigacionDependencia;
-    cout << "Ingrese la investigacion de la dependencia: \n";
+    cout << "Ingrese la investigacion realidad: \n";
+    cin.ignore();
     getline(cin, InvestigacionDependencia);
 
     Denuncias.back()->Derivar(InvestigacionDependencia, Fecha{});

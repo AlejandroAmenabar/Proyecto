@@ -30,9 +30,9 @@ void MostrarVector(const vector<IExposicion *> &objetos);
 
 void BuscarPersonaPorDniEnSistema(const vector<Persona *> &personas);
 
-void DerivarUltimaDenunciaEnComisaria(const vector<Comisaria*>& comisarias);
+void DerivarUltimaDenunciaEnComisaria(const vector<Comisaria *> &comisarias);
 
-void DerivarUltimaDenunciaEnDependencia(const vector<Dependencia*>& dependencias);
+void DerivarUltimaDenunciaEnDependencia(const vector<Dependencia *> &dependencias);
 
 InformacionDenuncia CrearInformacionDenuncia();
 
@@ -53,7 +53,7 @@ int main() {
     vector<Persona *> Personas;
     vector<Oficial *> Oficiales;
     vector<Delito *> Delitos;
-    vector<Dependencia*> Dependencias {&Fiscalia, &Criminalistica, &Fraude, &Drogas};
+    vector<Dependencia *> Dependencias{&Fiscalia, &Criminalistica, &Fraude, &Drogas};
 
     Fecha FechaActual;
 
@@ -133,6 +133,10 @@ int main() {
 
 #pragma region Limpieza del Sistema
 
+    for (const auto &Comisaria: Comisarias) {
+        delete Comisaria;
+    }
+
     for (const auto &Persona: Personas) {
         delete Persona;
     }
@@ -143,6 +147,10 @@ int main() {
 
     for (const auto &Denuncia: Denuncias) {
         delete Denuncia;
+    }
+
+    for (const auto &Delito: Delitos) {
+        delete Delito;
     }
 
 #pragma endregion
@@ -370,18 +378,18 @@ void BuscarPersonaPorDniEnSistema(const vector<Persona *> &personas) {
     }
 }
 
-void DerivarUltimaDenunciaEnComisaria(const vector<Comisaria*>& comisarias){
+void DerivarUltimaDenunciaEnComisaria(const vector<Comisaria *> &comisarias) {
     int CodigoComisaria;
 
-    vector<IExposicion*> IComisarias (comisarias.begin(), comisarias.end());
+    vector<IExposicion *> IComisarias(comisarias.begin(), comisarias.end());
     MostrarVector(IComisarias);
 
     cout << "Ingrese el codigo de la comisaria donde desea derivar la denuncia\n";
     cin >> CodigoComisaria;
 
-    Comisaria* ComisariaBuscada = dynamic_cast<Comisaria*>(BuscarPorCodigo(CodigoComisaria, IComisarias));
+    Comisaria *ComisariaBuscada = dynamic_cast<Comisaria *>(BuscarPorCodigo(CodigoComisaria, IComisarias));
 
-    if(!ComisariaBuscada){
+    if (!ComisariaBuscada) {
         cout << "No se encontró una comisaria con el codigo introducido\n";
         return;
     }
@@ -389,24 +397,25 @@ void DerivarUltimaDenunciaEnComisaria(const vector<Comisaria*>& comisarias){
     ComisariaBuscada->DerivarDenuncia();
 }
 
-void DerivarUltimaDenunciaEnDependencia(const vector<Dependencia*>& dependencias){
+void DerivarUltimaDenunciaEnDependencia(const vector<Dependencia *> &dependencias) {
     int CodigoDependencia;
 
-    vector<IExposicion*> IDependencias (dependencias.begin(), dependencias.end());
+    vector<IExposicion *> IDependencias(dependencias.begin(), dependencias.end());
     MostrarVector(IDependencias);
 
     cout << "Ingrese el codigo de la dependnecia donde desea derivar la denuncia\n";
     cin >> CodigoDependencia;
 
-    Dependencia* DependenciaBuscada = dynamic_cast<Dependencia*>(BuscarPorCodigo(CodigoDependencia, IDependencias));
+    Dependencia *DependenciaBuscada = dynamic_cast<Dependencia *>(BuscarPorCodigo(CodigoDependencia, IDependencias));
 
-    if(!DependenciaBuscada){
+    if (!DependenciaBuscada) {
         cout << "No se encontró una dependencia con el codigo introducido\n";
         return;
     }
 
     DependenciaBuscada->DerivarDenuncia();
 }
+
 InformacionDenuncia CrearInformacionDenuncia() {
 
     int TipoDenuncia;
@@ -415,23 +424,25 @@ InformacionDenuncia CrearInformacionDenuncia() {
 
     string Documentacion;
     cout << "Ingrese la documentacion\n";
-    cin >> Documentacion;
+    cin.ignore();
+    getline(cin, Documentacion);
 
     string DireccionDelito;
     cout << "Ingrese donde se cometio el delito\n";
-    cin >> DireccionDelito;
+    cin.ignore();
+    getline(cin, DireccionDelito);
 
     string Adicional;
 
     if (TipoDenuncia) {
         cout << "-- Denuncia Escrita --\n";
         cout << "Ingrese el archivo\n";
-        cin >> Adicional;
     } else {
         cout << "-- Denuncia Oral --\n";
         cout << "Ingrese la descripcion\n";
-        cin >> Adicional;
     }
+    cin.ignore();
+    getline(cin, Adicional);
 
     return {TipoDenuncia, Documentacion, DireccionDelito, Adicional};
 }
