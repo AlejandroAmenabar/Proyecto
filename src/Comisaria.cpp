@@ -6,17 +6,17 @@
 #include "Registro.h"
 #include "Delito.h"
 
-int Comisaria::Indice = 0;
-
 void Comisaria::MostrarInformacion() const {
     cout << "-- Comisaria --\n";
-    cout << "Codigo: " << Codigo << '\n';
+    Ente::MostrarInformacion();
     cout << "Direccion: " << Direccion << '\n';
+    for(const auto& Oficial : Oficiales){
+        Oficial->MostrarInformacion();
+    }
 }
 
 void Comisaria::AgregarOficial(Oficial *oficial) {
-    // Agrego el oficial solo si no se encuentra ya en el vector de oficiales
-    if (std::find(Oficiales.begin(), Oficiales.end(), oficial) != Oficiales.end()) {
+    if (std::find(Oficiales.begin(), Oficiales.end(), oficial) == Oficiales.end()) {
         Oficiales.emplace_back(oficial);
     }
 }
@@ -27,10 +27,6 @@ void Comisaria::MostrarDenuncias(Fecha fecha) const {
             Denuncia->MostrarInformacion();
         }
     }
-}
-
-void Comisaria::AgregarDenuncia(Denuncia *denuncia) {
-    Denuncias.emplace_back(denuncia);
 }
 
 void Comisaria::DerivarDenuncia() {

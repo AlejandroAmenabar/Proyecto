@@ -4,7 +4,7 @@
 
 void Dependencia::MostrarInformacion() const {
     cout << "-- Dependencia --\n";
-    cout << "Codigo:" << Codigo << '\n';
+    Ente::MostrarInformacion();
     cout << "Nombre: " << Nombre << '\n';
 }
 
@@ -18,8 +18,4 @@ void Dependencia::DerivarDenuncia() {
 //    Denuncias.back()->AgregarInvestigacion(Investigacion);
     Denuncias.back()->Derivar(InvestigacionDependencia, Fecha{});
     Denuncias.pop_back();
-}
-
-void Dependencia::AgregarDenuncia(Denuncia *denuncia) {
-    Denuncias.emplace_back(denuncia);
 }

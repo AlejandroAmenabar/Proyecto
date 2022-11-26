@@ -35,6 +35,8 @@ public:
     inline int GetDni() const { return Dni; }
 
     inline string GetNombre() const { return Nombre; }
+
+    inline int GetCodigo() const override { return Codigo; }
 };
 
 

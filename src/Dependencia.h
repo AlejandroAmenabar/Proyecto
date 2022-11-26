@@ -3,37 +3,33 @@
 
 #include <iostream>
 #include <vector>
+#include "Ente.h"
 
 class Oficial;
+
 class Denuncia;
 
 using namespace std;
 
-class Dependencia {
+class Dependencia : public Ente {
 
-	int Codigo;
+    string Nombre;
 
-	string Nombre;
+    Oficial *OficialDeTurno;
 
-	Oficial* OficialDeTurno;
-
-    vector<Denuncia*> Denuncias;
+    vector<Denuncia *> Denuncias;
 
 public:
 
-	Dependencia(int codigo, const string& nombre) : Codigo(codigo), Nombre(nombre) {}
+    explicit Dependencia(const string &nombre) : Nombre(nombre) {}
 
-    void MostrarInformacion() const;
+    virtual void MostrarInformacion() const override;
 
-    void DerivarDenuncia();
+    virtual void DerivarDenuncia() override;
 
-    void AgregarDenuncia(Denuncia* denuncia);
+    inline const string &GetNombre() const { return Nombre; }
 
-	inline int GetCodigo() const { return Codigo; }
-
-	inline const string& GetNombre() const { return Nombre; }
-
-	inline const Oficial* GetOficial() const { return OficialDeTurno; }
+    inline const Oficial *GetOficial() const { return OficialDeTurno; }
 };
 
 #endif /* DEPENDENCIA_H_ */

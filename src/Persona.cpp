@@ -11,6 +11,3 @@ void Persona::MostrarInformacion() const {
     cout << "Direccion: " << Direccion << '\n';
     cout << "Sexo: " << Sexo << '\n';
 }
-
-
-

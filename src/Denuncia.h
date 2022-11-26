@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include "IExposicion.h"
 
 class Fecha;
 
@@ -18,7 +19,31 @@ class Registro;
 
 using namespace std;
 
-class Denuncia {
+struct InformacionDenuncia {
+    int CodigoComisaria;
+    int TipoDenuncia;
+    string Documentacion;
+    string DireccionDelito;
+    string Adicional;
+
+    InformacionDenuncia(int codigoComisaria, int tipoDenuncia, const string &documentacion,
+                        const string &direccionDelito,
+                        const string &adicional) : CodigoComisaria(codigoComisaria), TipoDenuncia(tipoDenuncia),
+                                                   Documentacion(documentacion), DireccionDelito(direccionDelito),
+                                                   Adicional(adicional) {}
+
+    inline int GetCodigoComisaria() const { return CodigoComisaria; }
+
+    inline int GetTipoDenuncia() const { return TipoDenuncia; }
+
+    inline const string &GetDocumentacion() const { return Documentacion; }
+
+    inline const string &GetDireccionDelito() const { return DireccionDelito; }
+
+    inline const string &GetAdicional() const { return Adicional; }
+};
+
+class Denuncia : public IExposicion {
 
     static int Indice;
 
@@ -38,7 +63,7 @@ public:
 
     virtual ~Denuncia();
 
-    virtual void MostrarInformacion() const;
+    virtual void MostrarInformacion() const override;
 
     void AsignarPreambulo(const Fecha &fecha, const string &direccion, Oficial *oficial, Persona *demandante,
                           Persona *demandado);
@@ -60,6 +85,8 @@ public:
     inline const Preambulo *GetPreambulo() const { return PreambuloD; }
 
     inline const vector<Registro *>& GetRegistros() const { return Registros; }
+
+    virtual inline int GetCodigo() const override { return Codigo; }
 };
 
 #endif //PROYECTO_DENUNCIA_H

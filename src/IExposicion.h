@@ -5,6 +5,8 @@ class IExposicion{
 
 public:
     virtual void MostrarInformacion() const = 0;
+
+    virtual int GetCodigo() const = 0;
 };
 
 #endif //PROYECTO_IEXPOSICION_H
