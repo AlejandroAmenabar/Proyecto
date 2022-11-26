@@ -17,7 +17,7 @@ void Ente::DerivarDenuncia() {
     }
 
     string InvestigacionDependencia;
-    cout << "Ingrese la investigacion realidad: \n";
+    cout << "Ingrese la investigacion realizada: \n";
     cin.ignore();
     getline(cin, InvestigacionDependencia);
 
