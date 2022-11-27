@@ -27,11 +27,9 @@ void Denuncia::MostrarInformacion() const {
     DelitoCometido->MostrarInformacion();
     PreambuloD->MostrarInformacion();
 
-    for(const auto& Registro : Registros){
+    for (const auto &Registro: Registros) {
         Registro->MostrarInformacion();
     }
-
-    cout << '\n';
 }
 
 void Denuncia::AsignarPreambulo(const Fecha &fecha, const string &direccion, Oficial *oficial, Persona *demandante,
@@ -39,10 +37,10 @@ void Denuncia::AsignarPreambulo(const Fecha &fecha, const string &direccion, Ofi
     PreambuloD = new class Preambulo(fecha, direccion, demandante, demandado, oficial);
 }
 
-Persona *Denuncia::BuscarPersona(int dni) const {
-    if (GetDemandante()->GetDni() == dni) {
+Persona *Denuncia::BuscarPersona(int codigo) const {
+    if (GetDemandante()->GetCodigo() == codigo) {
         return GetDemandante();
-    } else if (GetDemandado()->GetDni() == dni) {
+    } else if (GetDemandado()->GetCodigo() == codigo) {
         return GetDemandado();
     }
 

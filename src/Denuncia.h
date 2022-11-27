@@ -67,7 +67,7 @@ public:
 
     void AgregarRegistro(Registro *registro);
 
-    Persona *BuscarPersona(int dni) const;
+    Persona *BuscarPersona(int codigo) const;
 
     Persona *GetDemandante() const;
 

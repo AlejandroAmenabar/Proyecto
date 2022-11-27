@@ -1,7 +1,7 @@
 #include <iostream>
 #include <algorithm>
-#include "IExposicion.h"
 #include <vector>
+#include "IExposicion.h"
 #include "Comisaria.h"
 #include "Delito.h"
 #include "Denuncia.h"
@@ -10,6 +10,7 @@
 #include "Dependencia.h"
 #include "Oficial.h"
 #include "Persona.h"
+#include "Preambulo.h"
 
 using namespace Cargos;
 using namespace std;
@@ -24,7 +25,9 @@ void RegistrarDenunciaEnSistema(const vector<Delito *> &delitos, const vector<Pe
                                 const vector<Oficial *> &oficiales, const vector<Comisaria *> &comisarias,
                                 vector<Denuncia *> &denuncias);
 
-void MostrarDenuncias(const vector<Denuncia *> &denuncias);
+void MostrarDenunciasPorFecha(const vector<Denuncia *> &denuncias);
+
+void MostrarDenunciasPorPersona(const vector<Persona*>& personas, const vector<Denuncia *> &denuncias);
 
 void MostrarVector(const vector<IExposicion *> &objetos);
 
@@ -72,13 +75,15 @@ int main() {
         cout << "2. Registrar nueva Persona en el Sistema\n";
         cout << "3. Registrar nueva Denuncia en el Sistema\n";
         cout << "4. Mostrar Denuncias registradas por fecha\n";
-        cout << "5. Mostrar todas las Comisarias del Sistema\n";
-        cout << "6. Mostrar todas las Personas del Sistema\n";
-        cout << "7. Mostrar todas los Oficiales del Sistema\n";
-        cout << "8. Buscar Persona por DNI en el Sistema\n";
-        cout << "9. Derivar Denuncias en Comisarias\n";
-        cout << "10. Derivar Denuncias en Dependencias\n";
-        cout << "11. Salir del Sistema\n";
+        cout << "5. Mostrar las Denuncias de cierta Persona\n";
+        cout << "6. Mostrar todas las Denuncias registradas del Sistema\n";
+        cout << "7. Mostrar todas las Comisarias del Sistema\n";
+        cout << "8. Mostrar todas las Personas del Sistema\n";
+        cout << "9. Mostrar todas los Oficiales del Sistema\n";
+        cout << "10. Buscar Persona por DNI en el Sistema\n";
+        cout << "11. Derivar Denuncias en Comisarias\n";
+        cout << "12. Derivar Denuncias en Dependencias\n";
+        cout << "13. Salir del Sistema\n";
 
         int OpcionSeleccionada;
         cin >> OpcionSeleccionada;
@@ -97,30 +102,39 @@ int main() {
                 RegistrarDenunciaEnSistema(Delitos, Personas, Oficiales, Comisarias, Denuncias);
                 break;
             case 4:
-                MostrarDenuncias(Denuncias);
+                MostrarDenunciasPorFecha(Denuncias);
                 break;
             case 5: {
+                MostrarDenunciasPorPersona(Personas, Denuncias);
+                break;
+            }
+            case 6: {
+                vector<IExposicion *> IDenuncias(Denuncias.begin(), Denuncias.end());
+                MostrarVector(IDenuncias);
+                break;
+            }
+            case 7: {
                 vector<IExposicion *> IComisarias(Comisarias.begin(), Comisarias.end());
                 MostrarVector(IComisarias);
                 break;
             }
-            case 6: {
+            case 8: {
                 vector<IExposicion *> IPersonas(Personas.begin(), Personas.end());
                 MostrarVector(IPersonas);
                 break;
             }
-            case 7: {
+            case 9: {
                 vector<IExposicion *> IOficiales(Oficiales.begin(), Oficiales.end());
                 MostrarVector(IOficiales);
                 break;
             }
-            case 8:
+            case 10:
                 BuscarPersonaPorDniEnSistema(Personas);
                 break;
-            case 9:
+            case 11:
                 DerivarUltimaDenunciaEnComisaria(Comisarias);
                 break;
-            case 10:
+            case 12:
                 DerivarUltimaDenunciaEnDependencia(Dependencias);
                 break;
             default:
@@ -346,13 +360,30 @@ void RegistrarDenunciaEnSistema(const vector<Delito *> &delitos, const vector<Pe
     denuncias.emplace_back(NuevaDenuncia);
 }
 
-void MostrarDenuncias(const vector<Denuncia *> &denuncias) {
+void MostrarDenunciasPorFecha(const vector<Denuncia *> &denuncias) {
     Fecha Fecha;
     cout << "Ingrese la fecha de las denuncias que desea buscar\n";
     cin >> Fecha;
+
     for (const auto &Denuncia: denuncias) {
 
         if (Denuncia->GetFecha() == Fecha) {
+            Denuncia->MostrarInformacion();
+        }
+    }
+}
+
+void MostrarDenunciasPorPersona(const vector<Persona*>& personas, const vector<Denuncia *> &denuncias) {
+    vector<IExposicion*> IPersonas (personas.begin(), personas.end());
+    MostrarVector(IPersonas);
+
+    int CodigoPersona;
+    cout << "Ingrese el código de la persona de la cual desea buscar las denuncias\n";
+    cin >> CodigoPersona;
+
+    for (const auto &Denuncia: denuncias) {
+
+        if (Denuncia->BuscarPersona(CodigoPersona)){
             Denuncia->MostrarInformacion();
         }
     }
