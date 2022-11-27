@@ -6,11 +6,12 @@
 #include "Oficial.h"
 #include "Preambulo.h"
 
-void DenunciaEscrita::Derivar(const string& investigacion, const Fecha &FechaD) {
-    Dependencia *Dependencia = GetDelito()->ObtenerUltimaDependencia();
-    Dependencia->AgregarDenuncia((Denuncia *) this);
+void DenunciaEscrita::Derivar(const string &investigacion, const Fecha &FechaD) {
+    Dependencia *DependenciaUltima = GetDelito()->ObtenerUltimaDependencia();
+    Registro *NuevoRegistro = new Registro(FechaD, DependenciaUltima->GetNombre());
 
-    Registro *NuevoRegistro = new Registro(FechaD, Dependencia->GetNombre());
+    NuevoRegistro->AsignarInvestigacion(investigacion);
+    DependenciaUltima->AgregarDenuncia(this);
     AgregarRegistro(NuevoRegistro);
 }
 

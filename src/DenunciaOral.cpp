@@ -11,8 +11,8 @@ void DenunciaOral::MostrarInformacion() const {
 }
 
 void DenunciaOral::Derivar(const string &investigacion, const Fecha &FechaD) {
-    Registro *NuevoRegistro = nullptr;
-    Dependencia *DependenciaSiguiente = nullptr;
+    Registro *NuevoRegistro;
+    Dependencia *DependenciaSiguiente;
 
     if (GetRegistros().empty()) {
         string PrimeraDependencia = GetDelito()->ObtenerPrimeraDependencia()->GetNombre();
