@@ -22,7 +22,7 @@ Denuncia::~Denuncia() {
 }
 
 void Denuncia::MostrarInformacion() const {
-    cout << "--- Denuncia ---\n";
+    cout << "--- DENUNCIA ---\n";
     cout << "Codigo: " << Codigo << '\n';
     cout << "Documentacion: " << Documentacion << '\n';
     DelitoCometido->MostrarInformacion();

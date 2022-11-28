@@ -61,8 +61,12 @@ int main() {
     Fecha FechaActual;
 
     vector<Dependencia *> DependenciaSexuales{&Criminalistica, &Fiscalia};
+    vector<Dependencia *> DependenciaFraudes{&Fraude, &Fiscalia};
+
     Delito Sexual{0, Categorias::Categoria::DelitosSexuales, DependenciaSexuales};
+    Delito Comercial{1, Categorias::Categoria::Robo, DependenciaSexuales};
     Delitos.emplace_back(&Sexual);
+    Delitos.emplace_back(&Comercial);
 
 #pragma endregion
 
