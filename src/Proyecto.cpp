@@ -27,7 +27,7 @@ void RegistrarDenunciaEnSistema(const vector<Delito *> &delitos, const vector<Pe
 
 void MostrarDenunciasPorFecha(const vector<Denuncia *> &denuncias);
 
-void MostrarDenunciasPorPersona(const vector<Persona*>& personas, const vector<Denuncia *> &denuncias);
+void MostrarDenunciasPorPersona(const vector<Persona *> &personas, const vector<Denuncia *> &denuncias);
 
 void MostrarVector(const vector<IExposicion *> &objetos);
 
@@ -257,7 +257,8 @@ void RegistrarPersonaEnSistema(vector<Persona *> &personas) {
 
 void RegistrarDenunciaEnSistema(const vector<Delito *> &delitos, const vector<Persona *> &personas,
                                 const vector<Oficial *> &oficiales, const vector<Comisaria *> &comisarias,
-                                vector<Denuncia *> &denuncias) { /*
+                                vector<Denuncia *> &denuncias) {
+    /*
      * Realiza los controles que hayan suficientes elementos para poder crear una nueva denuncia
      */
     if (personas.size() < 2) {
@@ -373,8 +374,8 @@ void MostrarDenunciasPorFecha(const vector<Denuncia *> &denuncias) {
     }
 }
 
-void MostrarDenunciasPorPersona(const vector<Persona*>& personas, const vector<Denuncia *> &denuncias) {
-    vector<IExposicion*> IPersonas (personas.begin(), personas.end());
+void MostrarDenunciasPorPersona(const vector<Persona *> &personas, const vector<Denuncia *> &denuncias) {
+    vector<IExposicion *> IPersonas(personas.begin(), personas.end());
     MostrarVector(IPersonas);
 
     int CodigoPersona;
@@ -383,7 +384,7 @@ void MostrarDenunciasPorPersona(const vector<Persona*>& personas, const vector<D
 
     for (const auto &Denuncia: denuncias) {
 
-        if (Denuncia->BuscarPersona(CodigoPersona)){
+        if (Denuncia->BuscarPersona(CodigoPersona)) {
             Denuncia->MostrarInformacion();
         }
     }
@@ -445,6 +446,26 @@ void DerivarUltimaDenunciaEnDependencia(const vector<Dependencia *> &dependencia
     }
 
     DependenciaBuscada->DerivarDenuncia();
+}
+
+template<typename T>
+void DerivarUltimaDenunciaEnEnte(const vector<T *> &entes) {
+    int CodigoDependencia;
+
+    vector<IExposicion *> IEntes(entes.begin(), entes.end());
+    MostrarVector(IEntes);
+
+    cout << "Ingrese el codigo de la dependnecia donde desea derivar la denuncia\n";
+    cin >> CodigoDependencia;
+
+    T *EnteBuscado = dynamic_cast<T *>(BuscarPorCodigo(CodigoDependencia, IEntes));
+
+    if (!EnteBuscado) {
+        cout << "No se encontró un ente con el codigo introducido\n";
+        return;
+    }
+
+    EnteBuscado->DerivarDenuncia();
 }
 
 InformacionDenuncia CrearInformacionDenuncia() {
