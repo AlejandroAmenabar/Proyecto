@@ -77,11 +77,9 @@ public:
 
     inline Delito *GetDelito() const { return DelitoCometido; }
 
-    inline const Preambulo *GetPreambulo() const { return PreambuloD; }
-
     inline const vector<Registro *> &GetRegistros() const { return Registros; }
 
-    virtual inline int GetCodigo() const override { return Codigo; }
+    inline int GetCodigo() const override { return Codigo; }
 };
 
 #endif //PROYECTO_DENUNCIA_H
